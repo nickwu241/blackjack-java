@@ -1,0 +1,9 @@
+package fundementals;
+
+public enum Suit
+{
+   CLUBS,
+   DIAMONDS,
+   HEARTS,
+   SPADES
+}
