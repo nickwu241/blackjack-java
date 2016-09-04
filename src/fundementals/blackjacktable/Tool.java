@@ -18,6 +18,9 @@ public class Tool
 
    public void display(Hand hand)
    {
-      System.out.println(hand.getOwner().getName() + ": " + hand.asString() + " (" + hand.getValue() + ")");
+      String message = hand.getOwner().getName() + ": " + hand.asString() + " (";
+      message += hand.busted() ? "BUSTED" : hand.getValue();
+      message += ")";
+      System.out.println(message);
    }
 }

@@ -114,8 +114,7 @@ public class BlackjackTable
       }
    }
 
-   // TODO: Check if busted or not
-   // Returns true if hand is completely done
+   // Returns true if hand is completely done OR busted
    private boolean executeAction(Action action, Hand hand)
    {
       boolean handComplete = false;
@@ -166,7 +165,11 @@ public class BlackjackTable
          // TODO: ERROR HANDLE
          UTIL.error("UNKNOWN ACTION...");
       }
-      return handComplete;
+      if (hand.busted())
+      {
+         UTIL.gameMsg(hand.getOwner() + ": BUSTED");
+      }
+      return handComplete || hand.busted();
    }
 
    private void resolve(Hand hand, int wage)
