@@ -75,11 +75,11 @@ public class HumanPlayer implements Player
       {
          return Action.STAY;
       }
-      else if (input.equals("DD"))
+      else if (input.equals("DD") && hand.size() == 2)
       {
          return Action.DOUBLEDOWN;
       }
-      else if (input.equals("SPLIT"))
+      else if (input.equals("SPLIT") && hand.splitable())
       {
          return Action.SPLIT;
       }
