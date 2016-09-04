@@ -2,8 +2,9 @@ package fundementals;
 
 public class Dealer implements Player
 {
-   private final String id;
-   private String       name;
+   private final static int THINK_TIME_MS = 1000;
+   private final String     id;
+   private String           name;
 
    public Dealer(String id, String name)
    {
@@ -26,6 +27,15 @@ public class Dealer implements Player
    @Override
    public Action requestAction(Hand hand)
    {
+      try
+      {
+         Thread.sleep(THINK_TIME_MS);
+      }
+      catch (InterruptedException e)
+      {
+         e.printStackTrace();
+      }
+      
       if (hand.getValue() < 17)
       {
          return Action.HIT;
