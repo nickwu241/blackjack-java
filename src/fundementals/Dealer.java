@@ -26,10 +26,12 @@ public class Dealer implements Player
    @Override
    public Action requestAction(Hand hand)
    {
-      if(hand.getValue() < 17){
+      if (hand.getValue() < 17)
+      {
          return Action.HIT;
       }
-      else {
+      else
+      {
          return Action.STAY;
       }
    }

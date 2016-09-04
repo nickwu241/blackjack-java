@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class Card
 {
-   private Integer value;
-   private Suit    suit;
+   private Integer                           value;
+   private Suit                              suit;
 
    static private final Map<Integer, String> VALUE_TO_STRING = bjValueToStringMap();
 

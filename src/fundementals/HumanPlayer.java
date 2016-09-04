@@ -55,7 +55,7 @@ public class HumanPlayer implements Player
    public Action requestAction(Hand hand)
    {
       String selectChoices = "Select an Action: HIT, STAY";
-      if (hand.size() == 2) 
+      if (hand.size() == 2)
       {
          selectChoices += ", DD";
       }

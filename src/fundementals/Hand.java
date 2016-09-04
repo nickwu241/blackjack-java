@@ -24,7 +24,7 @@ public class Hand
    {
       return this.getValue() > 21;
    }
-   
+
    public boolean splitable()
    {
       boolean splitable = false;
