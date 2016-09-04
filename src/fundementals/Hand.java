@@ -15,11 +15,26 @@ public class Hand
       this.owner = owner;
    }
 
+   public int size()
+   {
+      return cards.size();
+   }
+
    public boolean busted()
    {
       return this.getValue() > 21;
    }
    
+   public boolean splitable()
+   {
+      boolean splitable = false;
+      if (cards.size() == 2)
+      {
+         splitable = cards.get(0).getValue() == cards.get(1).getValue();
+      }
+      return splitable;
+   }
+
    public Player getOwner()
    {
       return owner;
@@ -43,7 +58,7 @@ public class Hand
       {
          str += card.toString() + ", ";
       }
-      return str.substring(0, str.length()-2);
+      return str.substring(0, str.length() - 2);
    }
 
    public void add(Card card)

@@ -80,7 +80,7 @@ public class BlackjackTable
          process(hand);
       });
       process(dealerHand);
-      
+
       // Resolve wages
       handToWage.forEach((hand, wage) -> resolve(hand, wage));
       splitsToWage.forEach((hand, wage) -> resolve(hand, wage));
@@ -154,6 +154,8 @@ public class BlackjackTable
          if (player.getMoney() >= wage)
          {
             Hand other = hand.split();
+            other.add(deck.poll());
+            hand.add(deck.poll());
             splitsToWage.put(other, player.pay(wage));
             process(other);
          }

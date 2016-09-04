@@ -54,10 +54,19 @@ public class HumanPlayer implements Player
    @Override
    public Action requestAction(Hand hand)
    {
-      System.out.println("Select an Action: HIT, STAY, DD, SPLIT");
-      Scanner scanner = new Scanner(System.in);
-      while (!scanner.hasNext());
-      String input = scanner.next();
+      String selectChoices = "Select an Action: HIT, STAY";
+      if (hand.size() == 2) 
+      {
+         selectChoices += ", DD";
+      }
+      if (hand.splitable())
+      {
+         selectChoices += ", SPLIT";
+      }
+      System.out.println(selectChoices);
+      Scanner scan = new Scanner(System.in);
+      while (!scan.hasNext());
+      String input = scan.next();
       if (input.equals("HIT"))
       {
          return Action.HIT;
