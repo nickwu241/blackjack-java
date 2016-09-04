@@ -79,11 +79,8 @@ public class BlackjackTable
       handToWage.forEach((hand, wage) -> process(hand));
       process(dealerHand);
       // Resolve wages
-      Player dealer = dealerHand.getOwner();
-      int dealerValue = dealerHand.getValue();
-
-      handToWage.forEach((hand, wage) -> resolve(hand, dealerValue));
-      splitsToWage.forEach((hand, wage) -> resolve(hand, dealerValue));
+      handToWage.forEach((hand, wage) -> resolve(hand, wage));
+      splitsToWage.forEach((hand, wage) -> resolve(hand, wage));
 
       // Round cleanup
       // -----------------------------------------------------------------------
@@ -173,18 +170,27 @@ public class BlackjackTable
       return handComplete;
    }
 
-   private void resolve(Hand hand, int dealerValue)
+   private void resolve(Hand hand, int wage)
    {
       // TODO: Double check to check win condition
       // TODO: Resolve wages properly
-      int handValue = hand.getValue();
-      if (handValue <= 21 && (handValue > dealerValue || dealerValue > 21))
+      HumanPlayer player = (HumanPlayer)hand.getOwner();
+      if (hand.busted())
       {
-         System.out.println(hand.getOwner().getName() + " WON");
+         // lost
       }
-      else
+      else if (dealerHand.busted() || hand.getValue() > dealerHand.getValue())
       {
-         System.out.println(hand.getOwner().getName() + " LOST");
+         // won
+         player.setMoney(player.getMoney() + wage * 2);
+      }
+      else if (hand.getValue() == dealerHand.getValue())
+      {
+         // push
+      }
+      else 
+      {
+         // lost
       }
    }
 }
