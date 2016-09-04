@@ -72,12 +72,15 @@ public class BlackjackTable
          }
       });
       dealerHand.add(deck.poll());
-      dealerHand.add(deck.poll());
 
       // Main logic
       // -----------------------------------------------------------------------
-      handToWage.forEach((hand, wage) -> process(hand));
+      handToWage.forEach((hand, wage) -> {
+         UTIL.display(dealerHand);
+         process(hand);
+      });
       process(dealerHand);
+      
       // Resolve wages
       handToWage.forEach((hand, wage) -> resolve(hand, wage));
       splitsToWage.forEach((hand, wage) -> resolve(hand, wage));
@@ -167,7 +170,7 @@ public class BlackjackTable
       }
       if (hand.busted())
       {
-         UTIL.gameMsg(hand.getOwner() + ": BUSTED");
+         UTIL.gameMsg(hand.getOwner().getName() + ": BUSTED");
       }
       return handComplete || hand.busted();
    }
