@@ -24,6 +24,7 @@ public class BlackjackTable
    private Map<Hand, Integer>        handToWage;
    private Map<Hand, Integer>        splitsToWage;
 
+   // TODO: Set minWage dynamically
    public BlackjackTable(int minWage)
    {
       // TODO: Generate random ID and name
@@ -117,6 +118,7 @@ public class BlackjackTable
       UTIL.display(hand);
    }
 
+   // TODO: Check if busted or not
    // Returns true if hand is completely done
    private boolean executeAction(Action action, Hand hand)
    {
@@ -173,6 +175,8 @@ public class BlackjackTable
 
    private void resolve(Hand hand, int dealerValue)
    {
+      // TODO: Double check to check win condition
+      // TODO: Resolve wages properly
       int handValue = hand.getValue();
       if (handValue <= 21 && (handValue > dealerValue || dealerValue > 21))
       {

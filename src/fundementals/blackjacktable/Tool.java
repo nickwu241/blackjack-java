@@ -5,6 +5,8 @@ import fundementals.Hand;
 public class Tool
 {
 
+   //TODO: Better messages?
+   
    public void error(String message){
       gameMsg("ERROR: " + message);
    }
