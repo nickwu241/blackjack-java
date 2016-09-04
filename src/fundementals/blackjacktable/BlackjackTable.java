@@ -171,7 +171,7 @@ public class BlackjackTable
       }
       if (hand.busted())
       {
-         UTIL.gameMsg(hand.getOwner().getName() + ": BUSTED with " + hand.asString() + "(" + hand.getValue() + ")");
+         UTIL.gameMsg(hand.getOwner().getName() + ": BUSTED with " + hand.asString() + " (" + hand.getValue() + ")");
       }
       return handComplete || hand.busted();
    }
