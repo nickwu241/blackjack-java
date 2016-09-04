@@ -15,6 +15,11 @@ public class Hand
       this.owner = owner;
    }
 
+   public boolean busted()
+   {
+      return this.getValue() > 21;
+   }
+   
    public Player getOwner()
    {
       return owner;
