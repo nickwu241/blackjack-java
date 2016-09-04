@@ -88,6 +88,7 @@ public class BlackjackTable
       // -----------------------------------------------------------------------
       handToWage.clear();
       splitsToWage.clear();
+      dealerHand = new Hand(dealerHand.getOwner());
    }
 
    private Deck getStandardDeck()
