@@ -1,0 +1,186 @@
+package fundementals.blackjacktable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import fundementals.Action;
+import fundementals.Card;
+import fundementals.Dealer;
+import fundementals.Deck;
+import fundementals.Hand;
+import fundementals.HumanPlayer;
+import fundementals.Player;
+import fundementals.Suit;
+
+public class BlackjackTable
+{
+   private static final Tool         UTIL = new Tool();
+   private Deck                      deck;
+   private Hand                      dealerHand;
+   private int                       minWage;
+   private Map<HumanPlayer, Integer> playersToBet;
+   private Map<Hand, Integer>        handToWage;
+   private Map<Hand, Integer>        splitsToWage;
+
+   public BlackjackTable(int minWage)
+   {
+      // TODO: Generate random ID and name
+      dealerHand = new Hand(new Dealer("UNKNOWN ID", "Dealer"));
+      this.minWage = minWage;
+      playersToBet = new HashMap<>();
+      handToWage = new HashMap<>();
+      splitsToWage = new HashMap<>();
+   }
+
+   public void addPlayer(HumanPlayer player)
+   {
+      if (player.getMoney() < minWage)
+      {
+         UTIL.error(player.getName() + ": Not enough money");
+      }
+      else
+      {
+         playersToBet.put(player, minWage);
+      }
+   }
+
+   public void removePlayer(HumanPlayer player)
+   {
+      playersToBet.remove(player);
+   }
+
+   public void play()
+   {
+      // Initialize the round
+      // -----------------------------------------------------------------------
+      deck = getStandardDeck();
+      playersToBet.forEach((player, wager) -> {
+         if (player.getMoney() < minWage)
+         {
+            this.removePlayer(player);
+            UTIL.gameMsg(player.toString() + " has been removed.");
+         }
+         else
+         {
+            Hand hand = new Hand(player);
+            hand.add(deck.poll());
+            hand.add(deck.poll());
+            handToWage.put(hand, wager);
+         }
+      });
+      dealerHand.add(deck.poll());
+      dealerHand.add(deck.poll());
+
+      // Main logic
+      // -----------------------------------------------------------------------
+      handToWage.forEach((hand, wage) -> process(hand));
+      process(dealerHand);
+      // Resolve wages
+      Player dealer = dealerHand.getOwner();
+      int dealerValue = dealerHand.getValue();
+
+      handToWage.forEach((hand, wage) -> resolve(hand, dealerValue));
+      splitsToWage.forEach((hand, wage) -> resolve(hand, dealerValue));
+
+      // Round cleanup
+      // -----------------------------------------------------------------------
+      handToWage.clear();
+      splitsToWage.clear();
+   }
+
+   private Deck getStandardDeck()
+   {
+      List<Card> cards = new ArrayList<>(52);
+      for (Suit suit : Suit.values())
+      {
+         for (int value = 1; value < 13; value++)
+         {
+            cards.add(new Card(suit, value));
+         }
+      }
+      Collections.shuffle(cards);
+      return new Deck(cards);
+   }
+
+   private void process(Hand hand)
+   {
+      boolean notDone = true;
+      while (notDone)
+      {
+         UTIL.display(hand);
+         Action action = hand.requestAction();
+         UTIL.gameMsg(hand.getOwner().getName() + ": SELECTED " + action.name());
+         notDone = !executeAction(action, hand);
+      }
+      UTIL.display(hand);
+   }
+
+   // Returns true if hand is completely done
+   private boolean executeAction(Action action, Hand hand)
+   {
+      boolean handComplete = false;
+      if (action == Action.HIT)
+      {
+         hand.add(deck.poll());
+      }
+      else if (action == Action.STAY)
+      {
+         handComplete = true;
+      }
+      else if (action == Action.DOUBLEDOWN)
+      {
+         // Safe cast because only HumanPlayer can doubledown
+         HumanPlayer player = (HumanPlayer) hand.getOwner();
+         int wage = handToWage.get(hand);
+         if (player.getMoney() >= wage)
+         {
+            handToWage.replace(hand, wage + player.pay(wage));
+            hand.add(deck.poll());
+            handComplete = true;
+         }
+         else
+         {
+            // TODO: ERROR HANDLE
+            UTIL.error("Can't DD, not enough money");
+         }
+      }
+      else if (action == Action.SPLIT)
+      {
+         // Safe cast because only HumanPlayer can split
+         HumanPlayer player = (HumanPlayer) hand.getOwner();
+         int wage = handToWage.get(hand);
+         if (player.getMoney() >= wage)
+         {
+            Hand other = hand.split();
+            splitsToWage.put(other, player.pay(wage));
+            process(other);
+         }
+         else
+         {
+            // TODO: ERROR HANDLE
+            UTIL.error("ERROR: Can't SPLIT, not enough money");
+         }
+      }
+      else if (action == Action.UNKNOWN)
+      {
+         // TODO: ERROR HANDLE
+         UTIL.error("UNKNOWN ACTION...");
+      }
+      return handComplete;
+   }
+
+   private void resolve(Hand hand, int dealerValue)
+   {
+      int handValue = hand.getValue();
+      if (handValue <= 21 && (handValue > dealerValue || dealerValue > 21))
+      {
+         System.out.println(hand.getOwner().getName() + " WON");
+      }
+      else
+      {
+         System.out.println(hand.getOwner().getName() + " LOST");
+      }
+   }
+}
