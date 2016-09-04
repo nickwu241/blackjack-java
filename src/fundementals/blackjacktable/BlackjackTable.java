@@ -112,7 +112,6 @@ public class BlackjackTable
          UTIL.gameMsg(hand.getOwner().getName() + ": SELECTED " + action.name());
          notDone = !executeAction(action, hand);
       }
-      UTIL.display(hand);
    }
 
    // TODO: Check if busted or not
@@ -172,25 +171,33 @@ public class BlackjackTable
 
    private void resolve(Hand hand, int wage)
    {
-      // TODO: Double check to check win condition
-      // TODO: Resolve wages properly
-      HumanPlayer player = (HumanPlayer)hand.getOwner();
+      HumanPlayer player = (HumanPlayer) hand.getOwner();
+      String message = player.getName() + ": ";
       if (hand.busted())
       {
          // lost
+         message += "LOST with ";
       }
       else if (dealerHand.busted() || hand.getValue() > dealerHand.getValue())
       {
          // won
          player.setMoney(player.getMoney() + wage * 2);
+         message += "WON with ";
       }
       else if (hand.getValue() == dealerHand.getValue())
       {
          // push
+         message += "TIED with ";
       }
-      else 
+      else
       {
          // lost
+         message += "LOST with ";
       }
+      message += hand.asString();
+      message += " (";
+      message += hand.busted() ? "BUSTED" : hand.getValue();
+      message += ")";
+      UTIL.gameMsg(message);
    }
 }
