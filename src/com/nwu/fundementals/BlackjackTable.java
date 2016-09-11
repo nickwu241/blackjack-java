@@ -6,10 +6,10 @@ import java.util.List;
 
 public class BlackjackTable
 {
-   private static final Tool         UTIL = new Tool();
-   private Deck                      deck;
-   private Hand                      dealerHand;
-   private int                       minWage;
+   private static final Tool UTIL = new Tool();
+   private Deck              deck;
+   private Hand              dealerHand;
+   private int               minWage;
    private List<HumanPlayer> players;
    private List<Hand>        firstHands;
    private List<Hand>        splitHands;
