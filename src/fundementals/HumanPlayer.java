@@ -26,17 +26,18 @@ public class HumanPlayer implements Player
 
    public int pay(int amount)
    {
-      int tmp = money - amount;
-      if (tmp < 0)
+      int finalMoney = money - amount;
+      if (finalMoney < 0)
       {
          // TODO: Error handle
          System.out.println("ERROR: can't pay this amount");
-         return 0;
+         finalMoney = 0;
       }
       else
       {
-         return this.money = tmp;
+         this.money = finalMoney;
       }
+      return finalMoney;
    }
 
    @Override
