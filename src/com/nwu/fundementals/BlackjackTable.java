@@ -2,9 +2,7 @@ package com.nwu.fundementals;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackTable
 {
@@ -12,9 +10,9 @@ public class BlackjackTable
    private Deck                      deck;
    private Hand                      dealerHand;
    private int                       minWage;
-   private Map<HumanPlayer, Integer> playersToBet;
-   private Map<Hand, Integer>        handToWage;
-   private Map<Hand, Integer>        splitsToWage;
+   private List<HumanPlayer> players;
+   private List<Hand>        firstHands;
+   private List<Hand>        splitHands;
 
    // TODO: Set minWage dynamically
    public BlackjackTable(int minWage)
@@ -22,9 +20,9 @@ public class BlackjackTable
       // TODO: Generate random ID and name
       dealerHand = new Hand(new Dealer("UNKNOWN ID", "Dealer"));
       this.minWage = minWage;
-      playersToBet = new HashMap<>();
-      handToWage = new HashMap<>();
-      splitsToWage = new HashMap<>();
+      players = new ArrayList<>();
+      firstHands = new ArrayList<>();
+      splitHands = new ArrayList<>();
    }
 
    public void addPlayer(HumanPlayer player)
@@ -35,13 +33,13 @@ public class BlackjackTable
       }
       else
       {
-         playersToBet.put(player, minWage);
+         players.add(player);
       }
    }
 
    public void removePlayer(HumanPlayer player)
    {
-      playersToBet.remove(player);
+      players.remove(player);
    }
 
    public void play()
@@ -49,7 +47,7 @@ public class BlackjackTable
       // Initialize the round
       // -----------------------------------------------------------------------
       deck = getStandardDeck();
-      playersToBet.forEach((player, wager) -> {
+      players.forEach((player) -> {
          if (player.getMoney() < minWage)
          {
             this.removePlayer(player);
@@ -60,27 +58,28 @@ public class BlackjackTable
             Hand hand = new Hand(player);
             hand.add(deck.poll());
             hand.add(deck.poll());
-            handToWage.put(hand, wager);
+            hand.setWager(minWage);
+            firstHands.add(hand);
          }
       });
       dealerHand.add(deck.poll());
 
       // Main logic
       // -----------------------------------------------------------------------
-      handToWage.forEach((hand, wage) -> {
+      firstHands.forEach((hand) -> {
          UTIL.display(dealerHand);
          process(hand);
       });
       process(dealerHand);
 
       // Resolve wages
-      handToWage.forEach((hand, wage) -> resolve(hand, wage));
-      splitsToWage.forEach((hand, wage) -> resolve(hand, wage));
+      firstHands.forEach((hand) -> resolve(hand, hand.getWager()));
+      splitHands.forEach((hand) -> resolve(hand, hand.getWager()));
 
       // Round cleanup
       // -----------------------------------------------------------------------
-      handToWage.clear();
-      splitsToWage.clear();
+      firstHands.clear();
+      splitHands.clear();
       dealerHand = new Hand(dealerHand.getOwner());
    }
 
@@ -126,10 +125,10 @@ public class BlackjackTable
       {
          // Safe cast because only HumanPlayer can doubledown
          HumanPlayer player = (HumanPlayer) hand.getOwner();
-         int wage = handToWage.get(hand);
+         int wage = hand.getWager();
          if (player.getMoney() >= wage)
          {
-            handToWage.replace(hand, wage + player.pay(wage));
+            hand.setWager(wage + player.pay(wage));
             hand.add(deck.poll());
             handComplete = true;
          }
@@ -143,13 +142,13 @@ public class BlackjackTable
       {
          // Safe cast because only HumanPlayer can split
          HumanPlayer player = (HumanPlayer) hand.getOwner();
-         int wage = handToWage.get(hand);
+         int wage = hand.getWager();
          if (player.getMoney() >= wage)
          {
             Hand other = hand.split();
             other.add(deck.poll());
             hand.add(deck.poll());
-            splitsToWage.put(other, player.pay(wage));
+            other.setWager(player.pay(wage));
             process(other);
          }
          else
