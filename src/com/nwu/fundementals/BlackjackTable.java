@@ -15,7 +15,6 @@ public class BlackjackTable
    private List<Hand>             firstHands;
    private List<Hand>             splitHands;
 
-   // TODO: Set minWager dynamically
    public BlackjackTable(int minWage)
    {
       // TODO: Generate random ID and name
@@ -24,6 +23,11 @@ public class BlackjackTable
       players = new ArrayList<>();
       firstHands = new ArrayList<>();
       splitHands = new ArrayList<>();
+   }
+
+   public void setMinWager(int minWager)
+   {
+      this.minWager = minWager;
    }
 
    public void addPlayer(HumanPlayer player)
