@@ -16,6 +16,7 @@ public class Main
       while (!in.hasNextLine());
       input = in.nextLine();
 
+      System.out.println("Okay " + input + ", you have $1000");
       HumanPlayer player = new HumanPlayer("ID", input);
       player.setMoney(1000);
       table.addPlayer(player);

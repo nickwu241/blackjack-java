@@ -10,17 +10,17 @@ public class BlackjackTable
    private static final UserInput INPUT = new UserInput();
    private Deck                   deck;
    private Hand                   dealerHand;
-   private int                    minWage;
+   private int                    minWager;
    private List<HumanPlayer>      players;
    private List<Hand>             firstHands;
    private List<Hand>             splitHands;
 
-   // TODO: Set minWage dynamically
+   // TODO: Set minWager dynamically
    public BlackjackTable(int minWage)
    {
       // TODO: Generate random ID and name
       dealerHand = new Hand(new Dealer("UNKNOWN ID", "Dealer"));
-      this.minWage = minWage;
+      this.minWager = minWage;
       players = new ArrayList<>();
       firstHands = new ArrayList<>();
       splitHands = new ArrayList<>();
@@ -28,7 +28,7 @@ public class BlackjackTable
 
    public void addPlayer(HumanPlayer player)
    {
-      if (player.getMoney() < minWage)
+      if (player.getMoney() < minWager)
       {
          UTIL.error(player.getName() + ": Not enough money");
       }
@@ -49,7 +49,7 @@ public class BlackjackTable
       // -----------------------------------------------------------------------
       deck = getStandardDeck();
       players.forEach((player) -> {
-         if (player.getMoney() < minWage)
+         if (player.getMoney() < minWager)
          {
             this.removePlayer(player);
             UTIL.gameMsg(player.toString() + " has been removed.");
@@ -59,7 +59,7 @@ public class BlackjackTable
             Hand hand = new Hand(player);
             hand.add(deck.poll());
             hand.add(deck.poll());
-            hand.setWager(INPUT.promptWage());
+            hand.setWager(player.pay(INPUT.promptWage(minWager)));
             firstHands.add(hand);
          }
       });
@@ -74,8 +74,8 @@ public class BlackjackTable
       process(dealerHand);
 
       // Resolve wages
-      firstHands.forEach((hand) -> resolve(hand, hand.getWager()));
-      splitHands.forEach((hand) -> resolve(hand, hand.getWager()));
+      firstHands.forEach((hand) -> resolve(hand));
+      splitHands.forEach((hand) -> resolve(hand));
 
       // Round cleanup
       // -----------------------------------------------------------------------
@@ -126,10 +126,10 @@ public class BlackjackTable
       {
          // Safe cast because only HumanPlayer can doubledown
          HumanPlayer player = (HumanPlayer) hand.getOwner();
-         int wage = hand.getWager();
-         if (player.getMoney() >= wage)
+         int wager = hand.getWager();
+         if (player.getMoney() >= wager)
          {
-            hand.setWager(wage + player.pay(wage));
+            hand.setWager(wager + player.pay(wager));
             hand.add(deck.poll());
             handComplete = true;
          }
@@ -143,13 +143,13 @@ public class BlackjackTable
       {
          // Safe cast because only HumanPlayer can split
          HumanPlayer player = (HumanPlayer) hand.getOwner();
-         int wage = hand.getWager();
-         if (player.getMoney() >= wage)
+         int wager = hand.getWager();
+         if (player.getMoney() >= wager)
          {
             Hand other = hand.split();
             other.add(deck.poll());
             hand.add(deck.poll());
-            other.setWager(player.pay(wage));
+            other.setWager(player.pay(wager));
             process(other);
          }
          else
@@ -170,7 +170,7 @@ public class BlackjackTable
       return handComplete || hand.busted();
    }
 
-   private void resolve(Hand hand, int wage)
+   private void resolve(Hand hand)
    {
       HumanPlayer player = (HumanPlayer) hand.getOwner();
       String message = player.getName() + ": ";
@@ -182,7 +182,7 @@ public class BlackjackTable
       else if (dealerHand.busted() || hand.getValue() > dealerHand.getValue())
       {
          // won
-         player.setMoney(player.getMoney() + wage * 2);
+         player.setMoney(player.getMoney() + hand.getWager() * 2);
          message += "WON with ";
       }
       else if (hand.getValue() == dealerHand.getValue())
@@ -200,6 +200,7 @@ public class BlackjackTable
       message += hand.busted() ? "BUSTED" : hand.getValue();
       message += ")";
       UTIL.gameMsg(message);
+      UTIL.displayMoney(player);
    }
 
 }
