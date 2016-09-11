@@ -7,11 +7,14 @@ public class Hand
 {
    private List<Card> cards;
    private int        aces; // # of aces in hand
+   private int        wager;
    private Player     owner;
 
    public Hand(Player owner)
    {
       cards = new ArrayList<>();
+      aces = 0;
+      wager = 0;
       this.owner = owner;
    }
 
@@ -33,6 +36,16 @@ public class Hand
          splitable = cards.get(0).getValue() == cards.get(1).getValue();
       }
       return splitable;
+   }
+
+   public void setWager(int amount)
+   {
+      wager = amount;
+   }
+
+   public int getWager()
+   {
+      return wager;
    }
 
    public Player getOwner()
