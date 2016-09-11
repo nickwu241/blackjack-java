@@ -27,7 +27,10 @@ public class Main
          input = "";
          while (!(input.equals("YES") || input.equals("NO")))
          {
-            if (in.hasNextLine()) input = in.nextLine();
+            if (in.hasNextLine())
+            {
+               input = in.nextLine().toUpperCase();
+            }
          }
          if (input.equals("NO"))
          {

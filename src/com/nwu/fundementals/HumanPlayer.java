@@ -67,7 +67,7 @@ public class HumanPlayer implements Player
       System.out.println(selectChoices);
       Scanner scan = new Scanner(System.in);
       while (!scan.hasNext());
-      String input = scan.next();
+      String input = scan.next().toUpperCase();
       if (input.equals("HIT"))
       {
          return Action.HIT;
