@@ -6,13 +6,14 @@ import java.util.List;
 
 public class BlackjackTable
 {
-   private static final Tool UTIL = new Tool();
-   private Deck              deck;
-   private Hand              dealerHand;
-   private int               minWage;
-   private List<HumanPlayer> players;
-   private List<Hand>        firstHands;
-   private List<Hand>        splitHands;
+   private static final Tool      UTIL  = new Tool();
+   private static final UserInput INPUT = new UserInput();
+   private Deck                   deck;
+   private Hand                   dealerHand;
+   private int                    minWage;
+   private List<HumanPlayer>      players;
+   private List<Hand>             firstHands;
+   private List<Hand>             splitHands;
 
    // TODO: Set minWage dynamically
    public BlackjackTable(int minWage)
@@ -58,7 +59,7 @@ public class BlackjackTable
             Hand hand = new Hand(player);
             hand.add(deck.poll());
             hand.add(deck.poll());
-            hand.setWager(minWage);
+            hand.setWager(INPUT.promptWage());
             firstHands.add(hand);
          }
       });
@@ -200,4 +201,5 @@ public class BlackjackTable
       message += ")";
       UTIL.gameMsg(message);
    }
+
 }
