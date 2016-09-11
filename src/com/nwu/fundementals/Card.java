@@ -1,4 +1,4 @@
-package fundementals;
+package com.nwu.fundementals;
 
 import java.util.HashMap;
 import java.util.Map;

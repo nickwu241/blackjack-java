@@ -1,4 +1,4 @@
-package fundementals;
+package com.nwu.fundementals;
 
 import java.util.ArrayList;
 import java.util.List;

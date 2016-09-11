@@ -1,9 +1,9 @@
-package client;
+package com.nwu.client;
 
 import java.util.Scanner;
 
-import fundementals.HumanPlayer;
-import fundementals.blackjacktable.BlackjackTable;
+import com.nwu.fundementals.BlackjackTable;
+import com.nwu.fundementals.HumanPlayer;
 
 public class Main
 {

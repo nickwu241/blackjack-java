@@ -1,4 +1,4 @@
-package fundementals;
+package com.nwu.fundementals;
 
 public class Dealer implements Player
 {

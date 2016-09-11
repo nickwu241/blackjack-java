@@ -1,6 +1,4 @@
-package fundementals.blackjacktable;
-
-import fundementals.Hand;
+package com.nwu.fundementals;
 
 public class Tool
 {

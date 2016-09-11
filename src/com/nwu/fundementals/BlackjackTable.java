@@ -1,17 +1,10 @@
-package fundementals.blackjacktable;
+package com.nwu.fundementals;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import fundementals.Action;
-import fundementals.Card;
-import fundementals.Dealer;
-import fundementals.Deck;
-import fundementals.Hand;
-import fundementals.HumanPlayer;
-import fundementals.Suit;
 
 public class BlackjackTable
 {
