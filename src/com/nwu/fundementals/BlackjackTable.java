@@ -6,14 +6,12 @@ import java.util.List;
 
 public class BlackjackTable
 {
-   private static final Tool      UTIL  = new Tool();
-   private static final UserInput INPUT = new UserInput();
-   private Deck                   deck;
-   private Hand                   dealerHand;
-   private int                    minWager;
-   private List<HumanPlayer>      players;
-   private List<Hand>             firstHands;
-   private List<Hand>             splitHands;
+   private Deck              deck;
+   private Hand              dealerHand;
+   private int               minWager;
+   private List<HumanPlayer> players;
+   private List<Hand>        firstHands;
+   private List<Hand>        splitHands;
 
    public BlackjackTable(int minWage)
    {
@@ -25,16 +23,16 @@ public class BlackjackTable
       splitHands = new ArrayList<>();
    }
 
-   public void setMinWager(int minWager)
+   public void setMinWager(int minWage)
    {
-      this.minWager = minWager;
+      this.minWager = minWage;
    }
 
    public void addPlayer(HumanPlayer player)
    {
       if (player.getMoney() < minWager)
       {
-         UTIL.error(player.getName() + ": Not enough money");
+         Util.Sys.error(player.getName() + ": Not enough money");
       }
       else
       {
@@ -47,32 +45,42 @@ public class BlackjackTable
       players.remove(player);
    }
 
-   public void play()
+   public void init()
    {
-      // Initialize the round
       // -----------------------------------------------------------------------
+      // Round cleanup
+      firstHands.clear();
+      splitHands.clear();
+      dealerHand = new Hand(dealerHand.getOwner());
+
+      // -----------------------------------------------------------------------
+      // Setup the round
       deck = getStandardDeck();
       players.forEach((player) -> {
          if (player.getMoney() < minWager)
          {
             this.removePlayer(player);
-            UTIL.gameMsg(player.toString() + " has been removed.");
+            Util.Sys.decorateSB(player.toString() + " has been removed.");
          }
          else
          {
             Hand hand = new Hand(player);
             hand.add(deck.poll());
             hand.add(deck.poll());
-            hand.setWager(player.pay(INPUT.promptWage(minWager)));
+            hand.setWager(player.pay(Util.Input.promptWage(minWager)));
             firstHands.add(hand);
          }
       });
       dealerHand.add(deck.poll());
+   }
 
-      // Main logic
+   public void play()
+   {
+      init();
       // -----------------------------------------------------------------------
+      // Main logic
       firstHands.forEach((hand) -> {
-         UTIL.display(dealerHand);
+         Util.Sys.display(dealerHand);
          process(hand);
       });
       process(dealerHand);
@@ -80,18 +88,12 @@ public class BlackjackTable
       // Resolve wages
       firstHands.forEach((hand) -> resolve(hand));
       splitHands.forEach((hand) -> resolve(hand));
-
-      // Round cleanup
-      // -----------------------------------------------------------------------
-      firstHands.clear();
-      splitHands.clear();
-      dealerHand = new Hand(dealerHand.getOwner());
    }
 
    private Deck getStandardDeck()
    {
       List<Card> cards = new ArrayList<>(52);
-      for (Suit suit : Suit.values())
+      for (Card.Suit suit : Card.Suit.values())
       {
          for (int value = 1; value < 13; value++)
          {
@@ -107,9 +109,9 @@ public class BlackjackTable
       boolean notDone = true;
       while (notDone)
       {
-         UTIL.display(hand);
+         Util.Sys.display(hand);
          Action action = hand.requestAction();
-         UTIL.gameMsg(hand.getOwner().getName() + ": SELECTED " + action.name());
+         Util.Sys.decorateSB(hand.getOwner().getName() + ": SELECTED " + action.name());
          notDone = !executeAction(action, hand);
       }
    }
@@ -140,7 +142,7 @@ public class BlackjackTable
          else
          {
             // TODO: ERROR HANDLE
-            UTIL.error("Can't DD, not enough money");
+            Util.Sys.error("Can't DD, not enough money");
          }
       }
       else if (action == Action.SPLIT)
@@ -159,17 +161,18 @@ public class BlackjackTable
          else
          {
             // TODO: ERROR HANDLE
-            UTIL.error("ERROR: Can't SPLIT, not enough money");
+            Util.Sys.error("Can't SPLIT, not enough money");
          }
       }
       else if (action == Action.UNKNOWN)
       {
          // TODO: ERROR HANDLE
-         UTIL.error("UNKNOWN ACTION...");
+         Util.Sys.error("UNKNOWN ACTION...");
       }
       if (hand.busted())
       {
-         UTIL.gameMsg(hand.getOwner().getName() + ": BUSTED with " + hand.asString() + " (" + hand.getValue() + ")");
+         Util.Sys.decorateSB(hand.getOwner().getName() + ": BUSTED with " + hand.asString() + " (" + hand.getValue()
+               + ")");
       }
       return handComplete || hand.busted();
    }
@@ -177,34 +180,14 @@ public class BlackjackTable
    private void resolve(Hand hand)
    {
       HumanPlayer player = (HumanPlayer) hand.getOwner();
-      String message = player.getName() + ": ";
-      if (hand.busted())
+      StringBuilder resStr = new StringBuilder();
+      Util.Tool.Result res = Util.Tool.buildResultString(dealerHand, hand, resStr);
+      if (res == Util.Tool.Result.WIN)
       {
-         // lost
-         message += "LOST with ";
-      }
-      else if (dealerHand.busted() || hand.getValue() > dealerHand.getValue())
-      {
-         // won
          player.setMoney(player.getMoney() + hand.getWager() * 2);
-         message += "WON with ";
       }
-      else if (hand.getValue() == dealerHand.getValue())
-      {
-         // push
-         message += "TIED with ";
-      }
-      else
-      {
-         // lost
-         message += "LOST with ";
-      }
-      message += hand.asString();
-      message += " (";
-      message += hand.busted() ? "BUSTED" : hand.getValue();
-      message += ")";
-      UTIL.gameMsg(message);
-      UTIL.displayMoney(player);
+      Util.Sys.decorateSB(resStr.toString());
+      Util.Sys.displayMoney(player);
    }
 
 }
