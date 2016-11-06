@@ -156,5 +156,47 @@ public class Util
          out.append(")");
          return res;
       }
+      
+
+      /**
+       * Selects an action.
+       * 
+       * @param hand
+       * @return Action specified to take taken by the hand.
+       */
+      public static Action requestAction(Hand hand)
+      {
+         Player.Type playerT = hand.getOwner().getType();
+         if (playerT == Player.Type.HUMAN)
+         {
+            Util.Sys.displayChoices(hand);
+            return Util.Input.promptAction(hand);
+         }
+         else if (playerT == Player.Type.DEALER)
+         {
+            try
+            {
+               Thread.sleep(Dealer.THINK_TIME_MS);
+            }
+            catch (InterruptedException e)
+            {
+               e.printStackTrace();
+            }
+            
+            if (hand.getValue() < 17)
+            {
+               return Action.HIT;
+            }
+            else
+            {
+               return Action.STAY;
+            }
+         }
+         else 
+         {
+            //Shouldn't get here
+            return Action.UNKNOWN;
+         }
+      }
    } // Tool
 }

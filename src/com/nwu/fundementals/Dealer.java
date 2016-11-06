@@ -1,48 +1,17 @@
 package com.nwu.fundementals;
 
-public class Dealer implements Player
+public class Dealer extends Player
 {
-   private final static int THINK_TIME_MS = 1000;
-   private final String     id;
-   private String           name;
+   public final static int THINK_TIME_MS = 1000;
 
    public Dealer(String id, String name)
    {
-      this.id = id;
-      this.name = name;
+      super(id, name);
    }
 
    @Override
-   public String getID()
+   public Type getType()
    {
-      return id;
-   }
-
-   @Override
-   public String getName()
-   {
-      return name;
-   }
-
-   @Override
-   public Action requestAction(Hand hand)
-   {
-      try
-      {
-         Thread.sleep(THINK_TIME_MS);
-      }
-      catch (InterruptedException e)
-      {
-         e.printStackTrace();
-      }
-      
-      if (hand.getValue() < 17)
-      {
-         return Action.HIT;
-      }
-      else
-      {
-         return Action.STAY;
-      }
+      return Player.Type.DEALER;
    }
 }

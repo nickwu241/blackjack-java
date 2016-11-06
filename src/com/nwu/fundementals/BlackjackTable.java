@@ -56,11 +56,11 @@ public class BlackjackTable
       // -----------------------------------------------------------------------
       // Setup the round
       deck = getStandardDeck();
+      List<HumanPlayer> removePlayers = new ArrayList<>();
       players.forEach((player) -> {
          if (player.getMoney() < minWager)
          {
-            this.removePlayer(player);
-            Util.Sys.decorateSB(player.toString() + " has been removed.");
+            removePlayers.add(player);
          }
          else
          {
@@ -70,6 +70,10 @@ public class BlackjackTable
             hand.setWager(player.pay(Util.Input.promptWage(minWager)));
             firstHands.add(hand);
          }
+      });
+      removePlayers.forEach(player -> {
+         removePlayer(player);
+         Util.Sys.decorateSB(player.getName() + " has been removed.");
       });
       dealerHand.add(deck.poll());
    }
@@ -110,7 +114,7 @@ public class BlackjackTable
       while (notDone)
       {
          Util.Sys.display(hand);
-         Action action = hand.requestAction();
+         Action action = Util.Tool.requestAction(hand);
          Util.Sys.decorateSB(hand.getOwner().getName() + ": SELECTED " + action.name());
          notDone = !executeAction(action, hand);
       }

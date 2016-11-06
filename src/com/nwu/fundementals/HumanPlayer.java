@@ -1,15 +1,12 @@
 package com.nwu.fundementals;
 
-public class HumanPlayer implements Player
+public class HumanPlayer extends Player
 {
-   private final String           id;
-   private String                 name;
-   private int                    money;
+   private int money;
 
    public HumanPlayer(String id, String name)
    {
-      this.id = id;
-      this.name = name;
+      super(id, name);
    }
 
    public void setMoney(int amount)
@@ -39,21 +36,8 @@ public class HumanPlayer implements Player
    }
 
    @Override
-   public String getID()
+   public Type getType()
    {
-      return id;
-   }
-
-   @Override
-   public String getName()
-   {
-      return name;
-   }
-
-   @Override
-   public Action requestAction(Hand hand)
-   {
-      Util.Sys.displayChoices(hand);
-      return Util.Input.promptAction(hand);
+      return Player.Type.HUMAN;
    }
 }

@@ -54,14 +54,6 @@ public class Hand
    }
 
    /**
-    * 
-    */
-   public Action requestAction()
-   {
-      return owner.requestAction(this);
-   }
-
-   /**
     * @return every card on a new line, in a string.
     */
    public String asString()

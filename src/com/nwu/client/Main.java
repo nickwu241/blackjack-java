@@ -50,24 +50,29 @@ public class Main extends Application
       final Label label = new Label();
       GridPane.setConstraints(label, 0, 1);
       grid.getChildren().add(label);
-      // Defining Hit, Stay, Double Down, Split buttons
+      // Defining buttons
       HBox hb = new HBox();
       Button hit = new Button("Hit");
       Button stay = new Button("Stay");
       Button dd = new Button("Double Down");
       Button split = new Button("Split");
-      hb.getChildren().addAll(hit, stay, dd, split);
+      Button init = new Button("Init");
+      Button play = new Button("Play");
+      hb.getChildren().addAll(hit, stay, dd, split, init, play);
       GridPane.setConstraints(hb, 0, 2);
       grid.getChildren().add(hb);
+      
       // Defining the TextArea
+      /*
       TextArea ta = new TextArea();
       Console console = new Console(ta);
+      
       PrintStream ps = new PrintStream(console, true);
       System.setOut(ps);
       System.setErr(ps);
       GridPane.setConstraints(ta, 0, 3);
       grid.getChildren().add(ta);
-
+      */
       // String input = "";
       // Setting an action for the Submit button
       submit.setOnAction(new EventHandler<ActionEvent>()
@@ -83,6 +88,7 @@ public class Main extends Application
          }
       });
 
+      
       Task<Void> sleeper = new Task<Void>() {
          @Override
          protected Void call() throws Exception {
@@ -93,12 +99,14 @@ public class Main extends Application
              return null;
          }
      };
+     
      sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
          @Override
          public void handle(WorkerStateEvent event) {
              label.setText("Hello World");
          }
      });
+     
      new Thread(sleeper).start();
      
       // Start
@@ -106,16 +114,46 @@ public class Main extends Application
 
       primaryStage.setScene(app);
       primaryStage.show();
-
+      /*
       BlackjackTable table = new BlackjackTable(10);
       System.out.println("Enter you name: ");
       System.out.println("Okay " + input + ", you have $1000");
       HumanPlayer player = new HumanPlayer("ID", input);
+      
       player.setMoney(1000);
       table.addPlayer(player);
-      //table.play();
-
-      ps.close();
+      */
+      /*
+      class BlackjackTask extends Task<Void> {
+         @Override
+         public Void call() throws Exception {
+            BlackjackTable table = new BlackjackTable(10);
+            HumanPlayer player = new HumanPlayer("ID", "NICK");
+            table.addPlayer(player);
+            player.setMoney(1000);
+            table.play();
+            return null;
+         }
+      }
+      
+      final Task<Void> BlackjackTask = new BlackjackTask();
+      Thread t = new Thread(BlackjackTask);
+      t.setDaemon(true);
+      t.start();
+      */
+      class BlackjackTask implements Runnable {
+         public void run() {
+            BlackjackTable table = new BlackjackTable(10);
+            HumanPlayer player = new HumanPlayer("ID", "NICK");
+            table.addPlayer(player);
+            player.setMoney(1000);
+            table.play();
+         }
+      }
+      Thread t = new Thread(new BlackjackTask());
+      t.setDaemon(true);
+      t.start();
+      //ps.close();
    }
 
    public static class Console extends OutputStream
