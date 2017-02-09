@@ -3,108 +3,78 @@ package com.nwu.fundementals;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand
-{
-   private List<Card> cards;
-   private int        aces; // # of aces in hand
-   private int        wager;
-   private Player     owner;
+public class Hand {
+   private List<Card> cards_;
+   private Player owner_;
 
-   public Hand(Player owner)
-   {
-      cards = new ArrayList<>();
-      aces = 0;
-      wager = 0;
-      this.owner = owner;
+   public Hand(Player owner) {
+      cards_ = new ArrayList<>();
+      owner_ = owner;
    }
 
-   public int size()
-   {
-      return cards.size();
+   public Player getOwner() {
+      return owner_;
    }
 
-   public boolean busted()
-   {
-      return this.getValue() > 21;
-   }
-
-   public boolean splitable()
-   {
-      boolean splitable = false;
-      if (cards.size() == 2)
-      {
-         splitable = cards.get(0).getValue() == cards.get(1).getValue();
-      }
-      return splitable;
-   }
-
-   public void setWager(int amount)
-   {
-      wager = amount;
-   }
-
-   public int getWager()
-   {
-      return wager;
-   }
-
-   public Player getOwner()
-   {
-      return owner;
-   }
-
-   /**
-    * @return every card on a new line, in a string.
-    */
-   public String asString()
-   {
+   public String asString() {
       String str = "";
-      for (Card card : cards)
-      {
+      for (Card card : cards_) {
          str += card.toString() + ", ";
       }
       return str.substring(0, str.length() - 2);
    }
 
-   public void add(Card card)
-   {
-      cards.add(card);
+   public void add(Card card) {
+      cards_.add(card);
    }
 
-   public Hand split()
-   {
-      Hand otherHand = new Hand(this.owner);
-      otherHand.add(cards.remove(1));
+   public int size() {
+      return cards_.size();
+   }
+
+   public boolean splittable() {
+      return cards_.size() == 2 &&
+             cards_.get(0).getValue() == cards_.get(1).getValue();
+   }
+
+   public Hand split() {
+      Hand otherHand = new Hand(owner_);
+      otherHand.add(cards_.remove(1));
       return otherHand;
    }
 
+   public boolean busted() {
+      return getValue() > 21;
+   }
+
    // gets the value of the hand, accounts for aces
-   public int getValue()
-   {
-      int handValue = 0;
-      // adds up the max value of hand
-      for (Card card : cards)
-      {
-         int cardValue = card.getValue();
-         if (cardValue == 1)
-         {
-            cardValue = 11;
-            aces++;
+   public int getValue() {
+      long aces = cards_.stream()
+                        .filter(card -> card.getValue() == 1)
+                        .count();
+
+      int total = cards_.stream()
+                        .mapToInt(this::maxValue)
+                        .sum();
+
+      while (aces-- > 0) {
+         if (total > 21) {
+            total -= 10;
          }
-         else if (cardValue > 10)
-         {
-            cardValue = 10;
-         }
-         handValue += cardValue;
       }
-      while (aces > 0)
-      {
-         if (handValue > 21)
-         {
-            handValue -= 10;
-         }
-         aces--;
+
+      return total;
+   }
+
+   private int maxValue(Card card) {
+      if (card.getValue() > 10) {
+         return 10;
       }
-      return handValue;
+      else if (card.getValue() == 1) {
+         return 11;
+      }
+      else {
+         return card.getValue();
+      }
    }
 }

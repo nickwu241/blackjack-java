@@ -1,7 +1,6 @@
 package com.nwu.fundementals;
 
-public enum Action
-{
+public enum Action {
    HIT,
    STAY,
    DOUBLEDOWN,

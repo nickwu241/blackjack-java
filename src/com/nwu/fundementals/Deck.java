@@ -5,54 +5,41 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Deck
-{
-   LinkedList<Card> deck;
+public class Deck {
+   LinkedList<Card> deck_;
 
    /**
     * Creates an empty Deck.
     */
-   public Deck()
-   {
-      deck = new LinkedList<Card>();
+   public Deck() {
+      deck_ = new LinkedList<Card>();
    }
 
    /**
-    * Creates a deck filled with cards.
-    * 
+    * Creates a deck_ filled with cards.
+    *
     * @param cards
     */
-   public Deck(List<Card> cards)
-   {
-      deck = new LinkedList<Card>(cards);
+   public Deck(List<Card> cards) {
+      deck_ = new LinkedList<Card>(cards);
    }
 
-   public void add(Card card)
-   {
-      deck.add(card);
+   public void addTop(Card card) {
+      deck_.add(card);
    }
 
-   public void remove()
-   {
-      deck.remove();
+   public Card drawTop() {
+      return deck_.poll();
    }
 
-   public Card poll()
-   {
-      return deck.poll();
+   public void shuffle() {
+      Collections.shuffle(deck_);
    }
 
-   public void shuffle()
-   {
-      Collections.shuffle(deck);
-   }
-
-   public void removeRandomCards(int numCards)
-   {
+   public void removeRandomCards(int numCards) {
       Random ran = new Random();
-      while (--numCards >= 0)
-      {
-         deck.remove(ran.nextInt(numCards));
+      while (numCards-- > 0) {
+         deck_.remove(ran.nextInt(numCards));
       }
    }
 }
