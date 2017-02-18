@@ -2,34 +2,28 @@ package com.nwu.fundementals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
    private List<Card> cards_;
-   private Player owner_;
 
-   public Hand(Player owner) {
+   public Hand() {
       cards_ = new ArrayList<>();
-      owner_ = owner;
    }
 
-   public Player getOwner() {
-      return owner_;
+   public String string() {
+      return cards_.stream()
+                   .map(Card::string)
+                   .collect(Collectors.joining(", "));
    }
 
-   public String asString() {
-      String str = "";
-      for (Card card : cards_) {
-         str += card.toString() + ", ";
-      }
-      return str.substring(0, str.length() - 2);
-   }
-
-   public void add(Card card) {
+   public Hand add(Card card) {
       cards_.add(card);
+      return this;
    }
 
-   public int size() {
-      return cards_.size();
+   public void clear() {
+      cards_.clear();
    }
 
    public boolean splittable() {
@@ -38,43 +32,24 @@ public class Hand {
    }
 
    public Hand split() {
-      Hand otherHand = new Hand(owner_);
-      otherHand.add(cards_.remove(1));
-      return otherHand;
-   }
-
-   public boolean busted() {
-      return getValue() > 21;
+      return new Hand().add(cards_.remove(1));
    }
 
    // gets the value of the hand, accounts for aces
    public int getValue() {
-      long aces = cards_.stream()
-                        .filter(card -> card.getValue() == 1)
-                        .count();
+      long aces = cards_.stream().filter(card -> card.getValue() == 1).count();
+      int total = cards_.stream().mapToInt(this::maxValue).sum();
 
-      int total = cards_.stream()
-                        .mapToInt(this::maxValue)
-                        .sum();
-
-      while (aces-- > 0) {
-         if (total > 21) {
-            total -= 10;
-         }
-      }
+      while (aces-- > 0)
+         if (total > 21) total -= 10;
 
       return total;
    }
 
    private int maxValue(Card card) {
-      if (card.getValue() > 10) {
-         return 10;
-      }
-      else if (card.getValue() == 1) {
-         return 11;
-      }
-      else {
-         return card.getValue();
-      }
+      int val = card.getValue();
+      if (val > 10) return 10;
+      else if (val == 1) return 11;
+      else return val;
    }
 }

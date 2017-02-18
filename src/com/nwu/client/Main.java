@@ -1,8 +1,7 @@
 package com.nwu.client;
 
-import com.nwu.fundementals.Action;
-import com.nwu.fundementals.GenericPlayer;
-import com.nwu.fundementals.Table;
+import com.nwu.fundementals.BlackjackGame;
+import com.nwu.fundementals.BlackjackPlayer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,10 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
+import static com.nwu.fundementals.BlackjackPlayer.Action;
 
 public class Main extends Application {
-   private Table table;
+   private BlackjackGame table;
+   private BlackjackPlayer player;
+
    public static void main(String[] args) {
       launch(args);
    }
@@ -25,21 +27,20 @@ public class Main extends Application {
    @Override
    public void start(Stage primaryStage) throws IOException {
       Scene app = new Scene(mainScene());
-      Activity text = new Activity();
       primaryStage.setScene(app);
       primaryStage.show();
 
-      ArrayList<GenericPlayer> players = new ArrayList<>();
-      // TODO Random ID
-      players.add(new GenericPlayer("random", "Nick"));
-      players.get(0).setMoney(1000);
-      table = new Table(10, players);
-      table.setActivity(text);
+      table = new BlackjackGame(player, 10);
+      new Thread(() -> {
+         while (player.getMoney() > 0)
+            table.play();
+      }).start();
    }
 
 
    public GridPane mainScene() {
-      // main grid
+      player = new BlackjackPlayer("Nick").setMoney(100);
+      // Main Grid
       final GridPane grid = new GridPane();
       grid.setPadding(new Insets(10, 10, 10, 10));
       grid.setVgap(5);
@@ -49,19 +50,21 @@ public class Main extends Application {
       name.setPromptText("Enter your name");
       name.setPrefColumnCount(10);
       final Button submit = new Button("Submit");
-      final Button play = new Button("Play");
+      final Button seeMoney = new Button("See Money");
 
       final HBox buttons = new HBox();
       final Button hit = new Button("Hit");
       final Button stay = new Button("Stay");
       final Button dd = new Button("Double Down");
       final Button split = new Button("Split");
+
+      final Label label = new Label();
+
       buttons.getChildren().addAll(hit, stay, dd, split);
 
       // Events
       // TODO: add submit feature
-      submit.setOnAction(event -> {});
-      play.setOnAction(event -> new Thread(() -> table.newRound()).start());
+      seeMoney.setOnAction(event -> label.setText(String.valueOf(player.getMoney())));
       hit.setOnAction(event -> table.setAction(Action.HIT));
       stay.setOnAction(event -> table.setAction(Action.STAY));
       dd.setOnAction(event -> table.setAction(Action.DOUBLEDOWN));
@@ -70,11 +73,13 @@ public class Main extends Application {
       // Positioning
       GridPane.setConstraints(name, 0, 0);
       GridPane.setConstraints(Activity.textField, 0, 1);
-      GridPane.setConstraints(buttons, 0,2);
+      GridPane.setConstraints(buttons, 0, 2);
       GridPane.setConstraints(submit, 1, 0);
-      GridPane.setConstraints(play, 1, 1);
+      GridPane.setConstraints(seeMoney, 1, 1);
+      GridPane.setConstraints(label, 0, 3);
 
-      grid.getChildren().addAll(name, Activity.textField, buttons, play, submit);
+      grid.getChildren()
+          .addAll(name, Activity.textField, buttons, seeMoney, submit, label);
       return grid;
    }
 }

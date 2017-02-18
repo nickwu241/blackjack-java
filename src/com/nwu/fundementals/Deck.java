@@ -1,27 +1,17 @@
 package com.nwu.fundementals;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Deck {
-   LinkedList<Card> deck_;
+   private LinkedList<Card> deck_;
 
    /**
-    * Creates an empty Deck.
-    */
-   public Deck() {
-      deck_ = new LinkedList<Card>();
-   }
-
-   /**
-    * Creates a deck_ filled with cards.
+    * Creates a deck filled with cards.
     *
     * @param cards
     */
-   public Deck(List<Card> cards) {
-      deck_ = new LinkedList<Card>(cards);
+   private Deck(List<Card> cards) {
+      deck_ = new LinkedList<>(cards);
    }
 
    public void addTop(Card card) {
@@ -41,5 +31,16 @@ public class Deck {
       while (numCards-- > 0) {
          deck_.remove(ran.nextInt(numCards));
       }
+   }
+
+   public static Deck standard52Deck() {
+      List<Card> deck = new ArrayList<>(52);
+      for (Card.Suit suit : Card.Suit.values()) {
+         for (int val = 1; val <= 13; val++) {
+            deck.add(new Card(suit, val));
+         }
+      }
+      Collections.shuffle(deck);
+      return new Deck(deck);
    }
 }
