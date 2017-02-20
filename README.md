@@ -1,11 +1,9 @@
 # Blackjack Game
 This is a functional Blackjack game where players can play against a dealer!
 
-Try it out at out/artifacts/blackjack_v2/blackjack_v2.jar
+Try it out - [BLACKJACK](https://www.dropbox.com/s/wqun0uqdkznavs0/blackjack_v2.jar?dl=0)
 
-OR
-
-Play it at [Blackjack](https://www.dropbox.com/s/oi6l7zs5xfcngz0/blackjack_v2.jar?dl=0)
+OR at out/artifacts/blackjack_v2/blackjack_v2.jar of this repository
 
 ## FEATURES
 * HIT, STAY, DOUBLEDOWN, STAY options available
