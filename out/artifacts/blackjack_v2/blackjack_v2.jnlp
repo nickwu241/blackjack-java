@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="blackjack_v2.jnlp">
+  <information>
+    <title>NICK'S FANCY BLACKJACK CASINO</title>
+    <vendor>Unknown</vendor>
+    <description>This is a functional Blackjack game where players can play against a dealer!  HIT, STAY, DOUBLEDOWN, STAY options available Money System: start with $100, minimum wager is $10 GUI created from JavaFX (FXML with controller)</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="blackjack_v2.jar" size="20136" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="com.nwu.client.BlackjackJavaFX"  name="blackjack-v2" />
+  <update check="background"/>
+</jnlp>
