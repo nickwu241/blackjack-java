@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="blackjack_v2.jar" size="20136" download="eager" />
+    <jar href="blackjack_v2.jar" size="20187" download="eager" />
   </resources>
   <jfx:javafx-desc  width="600" height="400" main-class="com.nwu.client.BlackjackJavaFX"  name="blackjack-v2" />
   <update check="background"/>

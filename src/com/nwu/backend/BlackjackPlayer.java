@@ -1,9 +1,6 @@
 package com.nwu.backend;
 
-import javafx.beans.property.IntegerProperty;
-
 import java.util.HashMap;
-import java.util.function.Function;
 
 public class BlackjackPlayer {
    //---------------------------------------------------------------------------
@@ -22,7 +19,7 @@ public class BlackjackPlayer {
    //---------------------------------------------------------------------------
    public BlackjackPlayer(String name) {
       name_ = name;
-      money_  = 0;
+      money_ = 0;
       handWagerMap_ = new HashMap<>();
    }
 
@@ -77,6 +74,7 @@ public class BlackjackPlayer {
 
    /**
     * Resolves 'hand' as a bust thus removes this hand from the player.
+    *
     * @param hand
     */
    public void bust(Hand hand) {

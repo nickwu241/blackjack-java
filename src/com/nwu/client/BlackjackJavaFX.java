@@ -1,16 +1,14 @@
 package com.nwu.client;
+
 import com.nwu.backend.BlackjackGame;
 import com.nwu.backend.BlackjackPlayer;
 import com.nwu.client.view.MainViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
 
 public class BlackjackJavaFX extends Application {
    private final int kMIN_WAGER = 10;
@@ -34,10 +32,12 @@ public class BlackjackJavaFX extends Application {
 
       showMainView();
 
-      Executors.newSingleThreadExecutor().execute(() -> {
+      Thread gameBackend = new Thread(() -> {
          while (player.getMoney() > 0)
             game.play();
       });
+      gameBackend.setDaemon(true);
+      gameBackend.start();
    }
 
    private void showMainView() throws IOException {

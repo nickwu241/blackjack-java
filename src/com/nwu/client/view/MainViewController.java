@@ -15,8 +15,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
-import java.util.Set;
-
 import static com.nwu.backend.BlackjackPlayer.Action;
 
 public class MainViewController {
