@@ -1,7 +1,10 @@
-# Eclipse Settings #
+# IDE Settings #
 ######################
 
 .project
 .classpath
 .settings/
+.idea/
+*.iml
+
 bin/
