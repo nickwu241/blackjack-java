@@ -11,15 +11,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Activity implements Initializable {
+   private static TextArea textArea_;
 
-   public static TextArea textField = new TextArea();
-
-   public Activity() {
-      textField.setEditable(false);
+   public static void setTextArea(TextArea textField) {
+      Activity.textArea_ = textField;
    }
 
-   public void appendText(String str) {
-      Platform.runLater(() -> textField.appendText(str));
+   public static void appendText(String str) {
+      Platform.runLater(() -> textArea_.appendText(str));
    }
 
    @Override

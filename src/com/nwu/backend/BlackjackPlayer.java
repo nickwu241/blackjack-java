@@ -1,8 +1,12 @@
-package com.nwu.fundementals;
+package com.nwu.backend;
+
+import javafx.beans.property.IntegerProperty;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 public class BlackjackPlayer {
+   //---------------------------------------------------------------------------
    public enum Action {
       HIT,
       STAY,
@@ -15,9 +19,10 @@ public class BlackjackPlayer {
    private int money_;
    private HashMap<Hand, Integer> handWagerMap_;
 
+   //---------------------------------------------------------------------------
    public BlackjackPlayer(String name) {
       name_ = name;
-      money_ = 0;
+      money_  = 0;
       handWagerMap_ = new HashMap<>();
    }
 
@@ -31,6 +36,7 @@ public class BlackjackPlayer {
          return false;
       }
       else {
+         money_ -= wager;
          handWagerMap_.put(hand, wager);
          return true;
       }
@@ -69,42 +75,58 @@ public class BlackjackPlayer {
       }
    }
 
-   public void clearHands() {
-      handWagerMap_.clear();
-   }
-
+   /**
+    * Resolves 'hand' as a bust thus removes this hand from the player.
+    * @param hand
+    */
    public void bust(Hand hand) {
-      money_ -= handWagerMap_.remove(hand);
+      BlackjackSystem.out(BlackjackHelper.results("BUST", hand));
+      handWagerMap_.remove(hand);
    }
 
    /*
-    * PRE-CONDITION: player contains no busted hands.
-    * @param dealerHandValue
+    * PRE-CONDITION: player contains no busted hands
+    * Resolves all the hands of the player.
+    * @param dealerHand
     */
-   public void resolveHands(int dealerHandValue) {
-      BlackjackSystem.out("Dealer has: " + dealerHandValue);
+   public void resolveHands(Hand dealerHand) {
+      int dealerHandValue = dealerHand.getValue();
+
+      BlackjackSystem.out(BlackjackHelper.hand("Dealer", dealerHand));
       handWagerMap_.forEach((hand, wager) -> {
          if (hand.getValue() > dealerHandValue || dealerHandValue > 21) {
-            BlackjackSystem.out("You won with " + hand.string() + " (" + hand.getValue() + ")");
+            BlackjackSystem.out(BlackjackHelper.results("WIN", hand));
             money_ += wager * 2;
          }
          else if (hand.getValue() == dealerHandValue) {
-            BlackjackSystem.out("You tied with " + hand.string() + " (" + hand.getValue() + ")");
+            BlackjackSystem.out(BlackjackHelper.results("TIE", hand));
             money_ += wager;
          }
          else {
-            BlackjackSystem.out("You lost with " + hand.string() + " (" + hand.getValue() + ")");
-            money_ -= wager;
+            BlackjackSystem.out(BlackjackHelper.results("LOSE", hand));
          }
       });
    }
 
+   //---------------------------------------------------------------------------
+   public boolean hasHands() {
+      return !handWagerMap_.isEmpty();
+   }
+
+   //---------------------------------------------------------------------------
+   public void clearHands() {
+      handWagerMap_.clear();
+   }
+
+   //---------------------------------------------------------------------------
    public int getMoney() {
       return money_;
    }
 
+   //---------------------------------------------------------------------------
    public BlackjackPlayer setMoney(int money) {
       money_ = money;
       return this;
    }
+
 }

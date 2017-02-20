@@ -1,9 +1,10 @@
-package com.nwu.fundementals;
+package com.nwu.backend;
 
 /**
  * Basic representation of a card: supports 1-13 of all suits, does not support joker.
  */
 public class Card {
+   //---------------------------------------------------------------------------
    public enum Suit {
       CLUBS, DIAMONDS, HEARTS, SPADES
    }
@@ -16,6 +17,7 @@ public class Card {
    private Integer value_;
    private Suit suit_;
 
+   //---------------------------------------------------------------------------
    public Card(Suit suit, int value) throws IllegalArgumentException {
       if (1 < value && value > 13) {
          throw new IllegalArgumentException("Not a valid suit_ or value_.");
@@ -24,15 +26,18 @@ public class Card {
       this.value_ = value;
    }
 
+   //---------------------------------------------------------------------------
    public Suit getSuit() {
       return suit_;
    }
 
+   //---------------------------------------------------------------------------
    public int getValue() {
       return value_;
    }
 
+   //---------------------------------------------------------------------------
    public String string() {
-      return VAL_STRING[value_ - 1] + " of " + suit_;
+      return VAL_STRING[value_ - 1] + " OF " + suit_;
    }
 }
