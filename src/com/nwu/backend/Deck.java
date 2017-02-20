@@ -41,7 +41,6 @@ public class Deck {
       return new Deck(deck);
    }
 
-
    /**
     * Creates a deck filled with cards (preserves ordering).
     *

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BlackjackJavaFX extends Application {
+   // TODO: change these values?
    private final int kMIN_WAGER = 10;
    private final int kSTARTING_PLAYER_MONEY = 100;
    private final String kSTAGE_TITLE = "NICK'S FANCY BLACKJACK CASINO";
@@ -33,17 +34,16 @@ public class BlackjackJavaFX extends Application {
       showMainView();
 
       Thread gameBackend = new Thread(() -> {
-         while (player.getMoney() > 0)
+         while (!game.gameOver())
             game.play();
       });
+
       gameBackend.setDaemon(true);
       gameBackend.start();
    }
 
    private void showMainView() throws IOException {
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(BlackjackJavaFX.class.getResource("view/MainView.fxml"));
-      primaryStage.setScene(new Scene(loader.load()));
+      primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("view/MainView.fxml"))));
       primaryStage.show();
    }
 

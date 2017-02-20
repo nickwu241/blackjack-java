@@ -30,7 +30,7 @@ public class Hand {
    //---------------------------------------------------------------------------
    public boolean splittable() {
       return cards_.size() == 2 &&
-             cards_.get(0).getValue() == cards_.get(1).getValue();
+      cards_.get(0).getValue() == cards_.get(1).getValue();
    }
 
    //---------------------------------------------------------------------------

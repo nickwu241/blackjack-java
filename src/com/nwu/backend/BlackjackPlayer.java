@@ -12,64 +12,56 @@ public class BlackjackPlayer {
       NONE
    }
 
-   final public String name_;
-   private int money_;
-   private HashMap<Hand, Integer> handWagerMap_;
+   public final String name_;
+   private final BlackjackSystem sys_;
+   private double money_;
+   private HashMap<Hand, Double> handWagerMap_;
 
    //---------------------------------------------------------------------------
    public BlackjackPlayer(String name) {
       name_ = name;
+      sys_ = new SimpleBlackjackSystem();
       money_ = 0;
       handWagerMap_ = new HashMap<>();
    }
 
    /**
+    * PRE-CONDITION: player has at least 'wager' amount of money.
+    *
     * @param hand
     * @param wager
-    * @return false if the player doesn't have 'wager' money.
     */
-   public boolean addHand(Hand hand, int wager) {
-      if (money_ - wager < 0) {
-         return false;
-      }
-      else {
-         money_ -= wager;
-         handWagerMap_.put(hand, wager);
-         return true;
-      }
+   public void addHand(Hand hand, double wager) {
+      assert (money_ >= wager);
+      money_ -= wager;
+      handWagerMap_.put(hand, wager);
    }
 
    /**
+    * PRE-CONDITION: player has enough money to double down.
+    *
     * @param hand
-    * @return false if the player doesn't have enough money.
     */
-   public boolean doubleDown(Hand hand) {
-      int wager = handWagerMap_.get(hand);
-      if (money_ - wager < 0) {
-         return false;
-      }
-      else {
-         money_ -= wager;
-         handWagerMap_.put(hand, wager * 2);
-         return true;
-      }
+   public void doubleDown(Hand hand) {
+      double wager = handWagerMap_.get(hand);
+      assert (money_ >= wager);
+      money_ -= wager;
+      handWagerMap_.put(hand, wager * 2);
    }
 
    /**
+    * PRE-CONDITION: player has enough money to split.
+    *
     * @param hand
-    * @return The split HAND OR null if the player doesn't have enough money.
+    * @return the split HAND.
     */
    public Hand split(Hand hand) {
-      int wager = handWagerMap_.get(hand);
-      if (money_ - wager < 0) {
-         return null;
-      }
-      else {
-         money_ -= wager;
-         Hand splitHand = hand.split();
-         handWagerMap_.put(splitHand, wager);
-         return splitHand;
-      }
+      double wager = handWagerMap_.get(hand);
+      assert (money_ >= wager);
+      money_ -= wager;
+      Hand splitHand = hand.split();
+      handWagerMap_.put(splitHand, wager);
+      return splitHand;
    }
 
    /**
@@ -78,30 +70,31 @@ public class BlackjackPlayer {
     * @param hand
     */
    public void bust(Hand hand) {
-      BlackjackSystem.out(BlackjackHelper.results("BUST", hand));
+      assert (hand.getValue() > 21);
+      sys_.out(BlackjackHelper.results("BUST", hand));
       handWagerMap_.remove(hand);
    }
 
    /*
-    * PRE-CONDITION: player contains no busted hands
+    * PRE-CONDITION: player contains no busted hands.
     * Resolves all the hands of the player.
     * @param dealerHand
     */
    public void resolveHands(Hand dealerHand) {
       int dealerHandValue = dealerHand.getValue();
 
-      BlackjackSystem.out(BlackjackHelper.hand("Dealer", dealerHand));
+      sys_.out(BlackjackHelper.hand("Dealer", dealerHand));
       handWagerMap_.forEach((hand, wager) -> {
          if (hand.getValue() > dealerHandValue || dealerHandValue > 21) {
-            BlackjackSystem.out(BlackjackHelper.results("WIN", hand));
+            sys_.out(BlackjackHelper.results("WIN", hand));
             money_ += wager * 2;
          }
          else if (hand.getValue() == dealerHandValue) {
-            BlackjackSystem.out(BlackjackHelper.results("TIE", hand));
+            sys_.out(BlackjackHelper.results("TIE", hand));
             money_ += wager;
          }
          else {
-            BlackjackSystem.out(BlackjackHelper.results("LOSE", hand));
+            sys_.out(BlackjackHelper.results("LOSE", hand));
          }
       });
    }
@@ -117,13 +110,19 @@ public class BlackjackPlayer {
    }
 
    //---------------------------------------------------------------------------
-   public int getMoney() {
+   public double getMoney() {
       return money_;
    }
 
-   //---------------------------------------------------------------------------
-   public BlackjackPlayer setMoney(int money) {
-      money_ = money;
+   /**
+    * PRE-CONDITION: money >= 0.
+    *
+    * @param amount
+    * @return
+    */
+   public BlackjackPlayer setMoney(int amount) {
+      assert (amount > 0);
+      money_ = amount;
       return this;
    }
 

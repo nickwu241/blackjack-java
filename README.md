@@ -18,7 +18,5 @@ Had fun with streams, lambda expressions, JavaFX, etc.
 ## WORK IN PROGRESS
 * Menu screen
 * Allow user to select their name
-* Error checking for not enough money
-* Handle bad bet inputs from user
 * Test Suite
 * Multiplayer functionality
