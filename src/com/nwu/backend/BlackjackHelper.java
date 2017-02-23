@@ -9,12 +9,12 @@ public class BlackjackHelper {
    private static final String kERR_LESS_THAN_MINWAGER_FORMAT = "You're too cheap! Need to BET at least $%.2f";
 
    //---------------------------------------------------------------------------
-   public static String hand(String person, Hand hand) {
+   public static String hand (String person, Hand hand) {
       return String.format(kHAND_FORMAT, person, hand.string(), hand.getValue());
    }
 
    //---------------------------------------------------------------------------
-   public static String results(String result, Hand hand) {
+   public static String results (String result, Hand hand) {
       switch (result) {
          case "BUST":
             return String.format(kRESULTS_FORMAT, "busted", hand.string(), hand.getValue());
@@ -31,19 +31,19 @@ public class BlackjackHelper {
    }
 
    //---------------------------------------------------------------------------
-   public static String gameOver(BlackjackPlayer player) {
+   public static String gameOver (BlackjackPlayer player) {
       // TODO: Add player names to string format?
       return String.format(kGAMEOVER_FORMAT);
    }
 
    //---------------------------------------------------------------------------
-   public static String errNoMoney(BlackjackPlayer player) {
+   public static String errNoMoney (BlackjackPlayer player) {
       // TODO: Add player names to string format?
       return String.format(kERR_NOMONEY_FORMAT, player.getMoney());
    }
 
    //---------------------------------------------------------------------------
-   public static String errBetLessThanMinWager(BlackjackPlayer player, double minWager) {
+   public static String errBetLessThanMinWager (BlackjackPlayer player, double minWager) {
       // TODO: Add player names to string format?
       return String.format(kERR_LESS_THAN_MINWAGER_FORMAT, minWager);
    }

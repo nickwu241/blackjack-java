@@ -18,7 +18,7 @@ public class BlackjackPlayer {
    private HashMap<Hand, Double> handWagerMap_;
 
    //---------------------------------------------------------------------------
-   public BlackjackPlayer(String name) {
+   public BlackjackPlayer (String name) {
       name_ = name;
       sys_ = new SimpleBlackjackSystem();
       money_ = 0;
@@ -31,7 +31,7 @@ public class BlackjackPlayer {
     * @param hand
     * @param wager
     */
-   public void addHand(Hand hand, double wager) {
+   public void addHand (Hand hand, double wager) {
       assert (money_ >= wager);
       money_ -= wager;
       handWagerMap_.put(hand, wager);
@@ -42,7 +42,7 @@ public class BlackjackPlayer {
     *
     * @param hand
     */
-   public void doubleDown(Hand hand) {
+   public void doubleDown (Hand hand) {
       double wager = handWagerMap_.get(hand);
       assert (money_ >= wager);
       money_ -= wager;
@@ -55,7 +55,7 @@ public class BlackjackPlayer {
     * @param hand
     * @return the split HAND.
     */
-   public Hand split(Hand hand) {
+   public Hand split (Hand hand) {
       double wager = handWagerMap_.get(hand);
       assert (money_ >= wager);
       money_ -= wager;
@@ -69,7 +69,7 @@ public class BlackjackPlayer {
     *
     * @param hand
     */
-   public void bust(Hand hand) {
+   public void bust (Hand hand) {
       assert (hand.getValue() > 21);
       sys_.out(BlackjackHelper.results("BUST", hand));
       handWagerMap_.remove(hand);
@@ -80,37 +80,42 @@ public class BlackjackPlayer {
     * Resolves all the hands of the player.
     * @param dealerHand
     */
-   public void resolveHands(Hand dealerHand) {
+   public void resolveHands (Hand dealerHand) {
       int dealerHandValue = dealerHand.getValue();
 
       sys_.out(BlackjackHelper.hand("Dealer", dealerHand));
       handWagerMap_.forEach((hand, wager) -> {
          if (hand.getValue() > dealerHandValue || dealerHandValue > 21) {
+            // TODO: change these alert messages to constants
+            // TODO: what happens to these messages on split hands?
+            sys_.alert("Nice job! You Win!");
             sys_.out(BlackjackHelper.results("WIN", hand));
             money_ += wager * 2;
          }
          else if (hand.getValue() == dealerHandValue) {
+            sys_.alert("You tied!");
             sys_.out(BlackjackHelper.results("TIE", hand));
             money_ += wager;
          }
          else {
+            sys_.alert("Oh dear... you lost, better luck next time :)");
             sys_.out(BlackjackHelper.results("LOSE", hand));
          }
       });
    }
 
    //---------------------------------------------------------------------------
-   public boolean hasHands() {
+   public boolean hasHands () {
       return !handWagerMap_.isEmpty();
    }
 
    //---------------------------------------------------------------------------
-   public void clearHands() {
+   public void clearHands () {
       handWagerMap_.clear();
    }
 
    //---------------------------------------------------------------------------
-   public double getMoney() {
+   public double getMoney () {
       return money_;
    }
 
@@ -120,7 +125,7 @@ public class BlackjackPlayer {
     * @param amount
     * @return
     */
-   public BlackjackPlayer setMoney(int amount) {
+   public BlackjackPlayer setMoney (int amount) {
       assert (amount > 0);
       money_ = amount;
       return this;

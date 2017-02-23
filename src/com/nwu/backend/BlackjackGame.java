@@ -1,9 +1,6 @@
 package com.nwu.backend;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static com.nwu.backend.BlackjackPlayer.Action;
 
@@ -29,8 +26,10 @@ public class BlackjackGame {
    private Action action_;
    private double bet_;
 
+   private Hand currentHand_;
+
    //---------------------------------------------------------------------------
-   public BlackjackGame(BlackjackPlayer player, double minWager) {
+   public BlackjackGame (BlackjackPlayer player, double minWager) {
       sys_ = new SimpleBlackjackSystem();
       helper_ = new BlackjackHelper();
 
@@ -45,24 +44,18 @@ public class BlackjackGame {
 
       action_ = Action.NONE;
       bet_ = 10;
+
+      currentHand_ = new Hand();
    }
 
    /**
     * Plays one round of blackjack.
     */
-   public void play() {
+   public void play () {
+      // check if game's over
       gameOverFlag_ = false;
-      deck_ = Deck.standard52Deck();
-      actionsAvailable_.clear();
-
-      player_.clearHands();
-      dealerHand_.clear();
-      dealerHand_.add(deck_.drawTop());
-      Hand playerHand = new Hand().add(deck_.drawTop())
-                                  .add(deck_.drawTop());
-
-      // Game over
       if (player_.getMoney() < minWager_) {
+         sys_.alert(helper_.gameOver(player_));
          sys_.out(helper_.gameOver(player_));
          betAvailable_ = false;
          actionsAvailable_.clear();
@@ -70,11 +63,25 @@ public class BlackjackGame {
          return;
       }
 
+
+      // get player's bet
       while (!getAppropiateBetAmount()) ;
+
+      // TODO: use this to clear for now, find a better way to clear the alert message on GUI
+      sys_.alert("");
+
+      dealerHand_.clear();
+      player_.clearHands();
+
+      deck_ = Deck.standard52Deck();
+      dealerHand_.add(deck_.drawTop());
+      Hand playerHand = new Hand().add(deck_.drawTop())
+                                  .add(deck_.drawTop());
 
       // player will have enough money to place 'bet_' amount
       player_.addHand(playerHand, bet_);
       actionsAvailable_.addAll(Arrays.asList(Action.HIT, Action.STAY, Action.DOUBLEDOWN));
+
       // actionPhase() will add split if the hand is splittable
       // and remove doubledown if player doesn't have enough money
       actionPhase(playerHand);
@@ -83,38 +90,55 @@ public class BlackjackGame {
       if (player_.hasHands()) {
          player_.resolveHands(dealerAI());
       }
-      sys_.out("----------------------------------------------");
+
+      // Clean up
+      sys_.out("---------------End of Round---------------");
+      actionsAvailable_.clear();
    }
 
    //---------------------------------------------------------------------------
-   public void setAction(Action action) {
+   public boolean gameOver () {
+      return gameOverFlag_;
+   }
+
+   //---------------------------------------------------------------------------
+   public void setAction (Action action) {
       action_ = action;
       selectedAction_ = true;
    }
 
    //---------------------------------------------------------------------------
-   public void setBet(double bet) {
+   public void setBet (double bet) {
       bet_ = bet;
       selectedBet_ = true;
    }
 
    //---------------------------------------------------------------------------
-   public double getMinWager() {
+   public double getMinWager () {
       return minWager_;
    }
 
-   public boolean gameOver() {
-      return gameOverFlag_;
-   }
-
    //---------------------------------------------------------------------------
-   public Set<Action> getActionsAvailable() {
+   public Set<Action> getActionsAvailable () {
+      assert (actionsAvailable_ != null);
       return Collections.unmodifiableSet(actionsAvailable_);
    }
 
    //---------------------------------------------------------------------------
-   public boolean getBetAvailable() {
+   public boolean getBetAvailable () {
       return betAvailable_;
+   }
+
+   //---------------------------------------------------------------------------
+   public List<Card> getDealerHand () {
+      assert (dealerHand_ != null);
+      return dealerHand_.asList();
+   }
+
+   //---------------------------------------------------------------------------
+   public List<Card> getCurrentHand () {
+      assert (currentHand_ != null);
+      return currentHand_.asList();
    }
 
    /**
@@ -122,9 +146,9 @@ public class BlackjackGame {
     *
     * @return true if they player will have enough money to pay 'bet_' amount
     */
-   private boolean getAppropiateBetAmount() {
+   private boolean getAppropiateBetAmount () {
       betAvailable_ = true;
-      // TODO: fix busy wait?
+      // TODO: do we want to busy wait?
       while (!selectedBet_) ;
       selectedBet_ = betAvailable_ = false;
 
@@ -145,7 +169,7 @@ public class BlackjackGame {
     *
     * @return the dealer's hand.
     */
-   private Hand dealerAI() {
+   private Hand dealerAI () {
       while (dealerHand_.getValue() < 17) {
          dealerHand_.add(deck_.drawTop());
          sys_.out(helper_.hand("Dealer", dealerHand_));
@@ -165,19 +189,21 @@ public class BlackjackGame {
     *
     * @param hand
     */
-   private void actionPhase(Hand hand) {
+   private void actionPhase (Hand hand) {
       sys_.out(helper_.hand("Dealer", dealerHand_));
       sys_.out(helper_.hand("You", hand));
+
+      currentHand_ = hand;
 
       if (player_.getMoney() < bet_) {
          actionsAvailable_.remove(Action.DOUBLEDOWN);
       }
 
-      if (hand.splittable()) {
+      if (hand.splittable() && player_.getMoney() >= bet_) {
          actionsAvailable_.add(Action.SPLIT);
       }
 
-      // TODO: fix busy wait?
+      // TODO: do we want to busy wait?
       while (!selectedAction_) ;
       selectedAction_ = false;
 

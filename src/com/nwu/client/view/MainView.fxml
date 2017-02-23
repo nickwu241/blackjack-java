@@ -1,109 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.71"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.nwu.client.view.MainViewController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nwu.client.view.MainViewController">
     <children>
-        <MenuBar prefHeight="400.0" prefWidth="600.0"
-                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                 AnchorPane.topAnchor="0.0">
+        <MenuBar prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
-        <SplitPane dividerPositions="0.8" prefHeight="400.0" prefWidth="600.0"
-                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+        <SplitPane dividerPositions="0.75" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
-                            prefWidth="228.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="228.0">
                     <children>
-                        <TextArea fx:id="activityArea" editable="false"
-                                  layoutX="54.0" layoutY="54.0"
-                                  prefHeight="370.0" prefWidth="475.0"
-                                  AnchorPane.bottomAnchor="0.0"
-                                  AnchorPane.leftAnchor="0.0"
-                                  AnchorPane.rightAnchor="0.0"
-                                  AnchorPane.topAnchor="0.0"/>
+                        <AnchorPane layoutY="220.0" prefHeight="220.0" prefWidth="446.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <ImageView fitHeight="220.0" fitWidth="446.0" pickOnBounds="true" visible="false">
+                                    <image>
+                                        <Image url="@../../backend/images/casino_mat.jpg" />
+                                    </image>
+                                </ImageView>
+                                <HBox prefHeight="100.0" prefWidth="446.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <ImageView fx:id="dc1" fitHeight="100" fitWidth="70" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc2" fitHeight="100" fitWidth="70" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc3" fitHeight="100" fitWidth="70" layoutX="60.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc4" fitHeight="100" fitWidth="70" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc5" fitHeight="100" fitWidth="70" layoutX="160.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc6" fitHeight="100" fitWidth="70" layoutX="370.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc7" fitHeight="100" fitWidth="70" layoutX="460.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="dc8" fitHeight="100" fitWidth="70" layoutX="550.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" layoutY="45.0" prefHeight="50.0" prefWidth="446.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                                    <children>
+                                        <Label fx:id="systemAlert" alignment="CENTER">
+                                            <font>
+                                                <Font name="Verdana" size="12.0" />
+                                            </font>
+                                            <effect>
+                                                <Glow />
+                                            </effect>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox layoutY="120.0" prefHeight="100.0" prefWidth="446.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+                                    <children>
+                                        <ImageView fx:id="pc1" fitHeight="100" fitWidth="70" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc2" fitHeight="100" fitWidth="70" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc3" fitHeight="100" fitWidth="70" layoutX="60.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc4" fitHeight="100" fitWidth="70" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc5" fitHeight="100" fitWidth="70" layoutX="160.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc6" fitHeight="100" fitWidth="70" layoutX="370.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc7" fitHeight="100" fitWidth="70" layoutX="460.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                        <ImageView fx:id="pc8" fitHeight="100" fitWidth="70" layoutX="550.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+                        <TextArea fx:id="activityArea" editable="false" layoutX="54.0" layoutY="54.0" pickOnBounds="false" prefHeight="150.0" prefWidth="446.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="220.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
-                            prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <Button fx:id="hit" alignment="TOP_CENTER"
-                                contentDisplay="CENTER" mnemonicParsing="false"
-                                text="HIT" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0"
-                                AnchorPane.topAnchor="0.0"/>
-                        <Button fx:id="stay" alignment="TOP_CENTER"
-                                contentDisplay="CENTER" layoutX="10.0"
-                                layoutY="10.0" mnemonicParsing="false"
-                                text="STAY" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0"
-                                AnchorPane.topAnchor="24.0"/>
-                        <Button fx:id="doubleDown" alignment="TOP_CENTER"
-                                contentDisplay="CENTER" layoutX="10.0"
-                                layoutY="34.0" mnemonicParsing="false"
-                                text="DOUBLE DOWN" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0"
-                                AnchorPane.topAnchor="48.0"/>
-                        <Button fx:id="split" alignment="TOP_CENTER"
-                                contentDisplay="CENTER" layoutX="10.0"
-                                layoutY="58.0" mnemonicParsing="false"
-                                text="SPLIT" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0"
-                                AnchorPane.topAnchor="72.0"/>
-                        <HBox layoutY="140.0" prefHeight="17.0"
-                              prefWidth="200.0" AnchorPane.leftAnchor="0.0"
-                              AnchorPane.rightAnchor="0.0">
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="230.0" prefWidth="130.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <Label text="Min Wager: ">
+                                <AnchorPane>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <children>
+                                        <Button fx:id="hit" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="HIT [H]" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <children>
+                                        <Button fx:id="stay" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="STAY [S]" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <children>
+                                        <Button fx:id="doubleDown" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="DOUBLE DOWN [D]" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <children>
+                                        <Button fx:id="split" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="SPLIT [T]" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                                </AnchorPane>
+                                <HBox minWidth="120.0" prefHeight="0.0" prefWidth="120.0">
+                                    <children>
+                                        <Label text="Min Wager: " />
+                                        <Label fx:id="minWager" text="\$0" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
                                     <padding>
-                                        <Insets left="10.0"/>
+                                        <Insets top="25.0" />
                                     </padding>
-                                </Label>
-                                <Label fx:id="minWager" text="0"/>
+                                </HBox>
+                                <HBox spacing="5.0">
+                                    <children>
+                                        <Button fx:id="bet" minHeight="25.0" minWidth="45.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="BET" HBox.hgrow="NEVER" />
+                                        <TextField fx:id="betAmount" prefHeight="25.0" prefWidth="80.0" HBox.hgrow="ALWAYS" />
+                                    </children>
+                                </HBox>
+                                <HBox minWidth="120.0">
+                                    <children>
+                                        <Label text="Money Left: " />
+                                        <Label fx:id="playerMoney" text="\$0" />
+                                    </children>
+                                </HBox>
                             </children>
-                        </HBox>
-                        <HBox layoutY="160.0" AnchorPane.leftAnchor="0.0"
-                              AnchorPane.rightAnchor="0.0">
-                            <children>
-                                <Button fx:id="bet" mnemonicParsing="false"
-                                        text="BET"/>
-                                <TextField fx:id="betAmount" prefHeight="25.0"
-                                           prefWidth="80.0"/>
-                            </children>
-                        </HBox>
-                        <HBox layoutY="200.0" AnchorPane.leftAnchor="0.0">
-                            <children>
-                                <Label text="Money: ">
-                                    <padding>
-                                        <Insets left="10.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="playerMoney" text="0"/>
-                            </children>
-                        </HBox>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </VBox>
                     </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
                 </AnchorPane>
             </items>
         </SplitPane>

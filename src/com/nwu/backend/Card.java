@@ -1,7 +1,11 @@
 package com.nwu.backend;
 
+import java.util.Objects;
+
 /**
  * Basic representation of a card: supports 1-13 of all suits, does not support joker.
+ * <p>
+ * Cards are equal if they have the same suit and same rank.
  */
 public class Card {
    //---------------------------------------------------------------------------
@@ -14,30 +18,46 @@ public class Card {
    {"ACE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN",
    "EIGHT", "NINE", "TEN", "JACK", "QUEEN", "KING"};
 
-   private Integer value_;
+   private Integer rank_;
    private Suit suit_;
 
    //---------------------------------------------------------------------------
-   public Card(Suit suit, int value) throws IllegalArgumentException {
-      if (1 < value && value > 13) {
-         throw new IllegalArgumentException("Not a valid suit_ or value_.");
+   public Card (Suit suit, int rank) throws IllegalArgumentException {
+      if (1 < rank && rank > 13) {
+         throw new IllegalArgumentException("Not a valid suit_ or rank_.");
       }
       this.suit_ = suit;
-      this.value_ = value;
+      this.rank_ = rank;
    }
 
    //---------------------------------------------------------------------------
-   public Suit getSuit() {
+   public Suit getSuit () {
       return suit_;
    }
 
    //---------------------------------------------------------------------------
-   public int getValue() {
-      return value_;
+   public int getValue () {
+      return rank_;
    }
 
    //---------------------------------------------------------------------------
-   public String string() {
-      return VAL_STRING[value_ - 1] + " OF " + suit_;
+   public String string () {
+      return VAL_STRING[rank_ - 1] + " OF " + suit_;
+   }
+
+   //---------------------------------------------------------------------------
+   @Override
+   public int hashCode () {
+      return Objects.hash(rank_, suit_);
+   }
+
+   //---------------------------------------------------------------------------
+   @Override
+   public boolean equals (Object o) {
+      return
+      o != null && (
+      o == this ||
+      (o.getClass() == this.getClass() && ((Card) o).rank_ == rank_ && ((Card) o).suit_ == suit_)
+      );
    }
 }

@@ -7,22 +7,22 @@ public class Deck {
    private LinkedList<Card> deck_;
 
    //---------------------------------------------------------------------------
-   public void addTop(Card card) {
+   public void addTop (Card card) {
       deck_.add(card);
    }
 
    //---------------------------------------------------------------------------
-   public Card drawTop() {
+   public Card drawTop () {
       return deck_.poll();
    }
 
    //---------------------------------------------------------------------------
-   public void shuffle() {
+   public void shuffle () {
       Collections.shuffle(deck_);
    }
 
    //---------------------------------------------------------------------------
-   public void removeRandomCards(int numCards) {
+   public void removeRandomCards (int numCards) {
       Random ran = new Random();
       while (numCards-- > 0) {
          deck_.remove(ran.nextInt(numCards));
@@ -30,7 +30,7 @@ public class Deck {
    }
 
    //---------------------------------------------------------------------------
-   public static Deck standard52Deck() {
+   public static Deck standard52Deck () {
       List<Card> deck = new ArrayList<>(52);
       for (Card.Suit suit : Card.Suit.values()) {
          for (int val = 1; val <= 13; val++) {
@@ -46,7 +46,7 @@ public class Deck {
     *
     * @param cards
     */
-   private Deck(List<Card> cards) {
+   private Deck (List<Card> cards) {
       deck_ = new LinkedList<>(cards);
    }
 }

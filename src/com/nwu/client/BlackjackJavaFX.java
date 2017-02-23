@@ -2,6 +2,7 @@ package com.nwu.client;
 
 import com.nwu.backend.BlackjackGame;
 import com.nwu.backend.BlackjackPlayer;
+import com.nwu.backend.ImageHelper;
 import com.nwu.client.view.MainViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +22,11 @@ public class BlackjackJavaFX extends Application {
    private BlackjackPlayer player;
 
    @Override
-   public void start(Stage primaryStage) throws IOException {
+   public void start (Stage primaryStage) throws IOException {
       // Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
       this.primaryStage = primaryStage;
       this.primaryStage.setTitle(kSTAGE_TITLE);
+      // this.primaryStage.getIcons().add(ImageHelper.instance().imageForIcon());
 
       // TODO: ask for player's name
       player = new BlackjackPlayer("Nick").setMoney(kSTARTING_PLAYER_MONEY);
@@ -42,12 +44,12 @@ public class BlackjackJavaFX extends Application {
       gameBackend.start();
    }
 
-   private void showMainView() throws IOException {
+   private void showMainView () throws IOException {
       primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("view/MainView.fxml"))));
       primaryStage.show();
    }
 
-   public static void main(String[] args) {
+   public static void main (String[] args) {
       launch(args);
    }
 
