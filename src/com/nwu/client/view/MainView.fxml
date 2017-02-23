@@ -9,7 +9,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nwu.client.view.MainViewController">
+<AnchorPane fx:id="mainLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nwu.client.view.MainViewController">
     <children>
         <MenuBar prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -38,18 +37,18 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <SplitPane dividerPositions="0.75" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+        <SplitPane dividerPositions="0.725" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="228.0">
                     <children>
-                        <AnchorPane layoutY="220.0" prefHeight="220.0" prefWidth="446.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane focusTraversable="true" layoutY="220.0" prefHeight="300.0" prefWidth="476.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <ImageView fitHeight="220.0" fitWidth="446.0" pickOnBounds="true" visible="false">
+                                <ImageView fitHeight="220.0" fitWidth="476.0" pickOnBounds="true" visible="false">
                                     <image>
-                                        <Image url="@../../backend/images/casino_mat.jpg" />
+                                        <Image url="@../../../../../resources/com/nwu/backend/images/casino_mat.jpg" />
                                     </image>
                                 </ImageView>
-                                <HBox prefHeight="100.0" prefWidth="446.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <HBox AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <ImageView fx:id="dc1" fitHeight="100" fitWidth="70" pickOnBounds="true" preserveRatio="true" />
                                         <ImageView fx:id="dc2" fitHeight="100" fitWidth="70" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
@@ -61,19 +60,12 @@
                                         <ImageView fx:id="dc8" fitHeight="100" fitWidth="70" layoutX="550.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER" layoutY="45.0" prefHeight="50.0" prefWidth="446.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-                                    <children>
-                                        <Label fx:id="systemAlert" alignment="CENTER">
-                                            <font>
-                                                <Font name="Verdana" size="12.0" />
-                                            </font>
-                                            <effect>
-                                                <Glow />
-                                            </effect>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <HBox layoutY="120.0" prefHeight="100.0" prefWidth="446.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+                                  <Label fx:id="systemAlert" alignment="CENTER" layoutY="100.0" prefHeight="20.0" prefWidth="446.0" wrapText="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                                      <font>
+                                          <Font name="Comic Sans MS" size="24.0" />
+                                      </font>
+                                  </Label>
+                                <HBox layoutY="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
                                     <children>
                                         <ImageView fx:id="pc1" fitHeight="100" fitWidth="70" pickOnBounds="true" preserveRatio="true" />
                                         <ImageView fx:id="pc2" fitHeight="100" fitWidth="70" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
@@ -87,7 +79,7 @@
                                 </HBox>
                             </children>
                         </AnchorPane>
-                        <TextArea fx:id="activityArea" editable="false" layoutX="54.0" layoutY="54.0" pickOnBounds="false" prefHeight="150.0" prefWidth="446.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="220.0" />
+                        <TextArea fx:id="activityArea" editable="false" layoutX="54.0" layoutY="298.0" pickOnBounds="false" prefHeight="152.0" prefWidth="476.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="298.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

@@ -1,7 +1,6 @@
 package com.nwu.client.view;
 
 import com.nwu.backend.*;
-import com.nwu.client.Activity;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -177,7 +176,7 @@ public class MainViewController {
       else if (c == KeyCode.S && !stay.isDisabled()) {
          stay.fire();
       }
-      else if (c == KeyCode.H && !doubleDown.isDisabled()) {
+      else if (c == KeyCode.D && !doubleDown.isDisabled()) {
          doubleDown.fire();
       }
       else if (c == KeyCode.T && !split.isDisabled()) {

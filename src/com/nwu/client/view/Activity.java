@@ -1,4 +1,4 @@
-package com.nwu.client;
+package com.nwu.client.view;
 
 import javafx.application.Platform;
 import javafx.fxml.Initializable;

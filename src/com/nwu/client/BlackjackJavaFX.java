@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BlackjackJavaFX extends Application {
+   // TODO: add music
    // TODO: change these values?
    private final int kMIN_WAGER = 10;
    private final int kSTARTING_PLAYER_MONEY = 100;
@@ -26,7 +27,7 @@ public class BlackjackJavaFX extends Application {
       // Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
       this.primaryStage = primaryStage;
       this.primaryStage.setTitle(kSTAGE_TITLE);
-      // this.primaryStage.getIcons().add(ImageHelper.instance().imageForIcon());
+      this.primaryStage.getIcons().add(ImageHelper.instance().imageForIcon());
 
       // TODO: ask for player's name
       player = new BlackjackPlayer("Nick").setMoney(kSTARTING_PLAYER_MONEY);

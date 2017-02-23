@@ -44,7 +44,7 @@ public class ImageHelper {
          for (int rank = 1; rank <= 13; rank++) {
             // TODO: maybe better way to load the cards
             Card card = new Card(suit, rank);
-            String p = kCARD_IMAGES_DIR + card.string().replace(' ', '_') + kFILE_TYPE;
+            String p = kCARD_IMAGES_DIR + card.string().replace(' ', '_').toLowerCase() + kFILE_TYPE;
             cardsFront_.put(card, imageFromPath(p));
          }
       }

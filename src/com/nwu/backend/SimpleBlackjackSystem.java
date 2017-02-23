@@ -1,6 +1,6 @@
 package com.nwu.backend;
 
-import com.nwu.client.Activity;
+import com.nwu.client.view.Activity;
 
 public class SimpleBlackjackSystem implements BlackjackSystem {
    @Override
