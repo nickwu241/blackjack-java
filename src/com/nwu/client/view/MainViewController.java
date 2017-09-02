@@ -138,7 +138,7 @@ public class MainViewController {
       Object src = e.getSource();
       if (src == bet) {
          if (!kMONEY_PATTERN.matcher(betAmount.getText()).matches()) {
-            system.out(kERR_INAVALID_BET_AMOUNT);
+            system.out(kERR_INAVALID_BET_AMOUNT, BlackjackHelper.log(), BlackjackHelper.alert());
             return;
          }
          try {

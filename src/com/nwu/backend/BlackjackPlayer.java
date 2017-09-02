@@ -71,7 +71,7 @@ public class BlackjackPlayer {
     */
    public void bust (Hand hand) {
       assert (hand.getValue() > 21);
-      sys_.out(BlackjackHelper.results("BUST", hand));
+      sys_.out(BlackjackHelper.results("BUST", hand), BlackjackHelper.log());
       handWagerMap_.remove(hand);
    }
 
@@ -83,23 +83,23 @@ public class BlackjackPlayer {
    public void resolveHands (Hand dealerHand) {
       int dealerHandValue = dealerHand.getValue();
 
-      sys_.out(BlackjackHelper.hand("Dealer", dealerHand));
+      sys_.out(BlackjackHelper.hand("Dealer", dealerHand), BlackjackHelper.log());
       handWagerMap_.forEach((hand, wager) -> {
          if (hand.getValue() > dealerHandValue || dealerHandValue > 21) {
             // TODO: change these alert messages to constants
             // TODO: what happens to these messages on split hands?
-            sys_.alert("Nice job! You Win!");
-            sys_.out(BlackjackHelper.results("WIN", hand));
+            sys_.out("Nice job! You Win!", BlackjackHelper.alert());
+            sys_.out(BlackjackHelper.results("WIN", hand), BlackjackHelper.log());
             money_ += wager * 2;
          }
          else if (hand.getValue() == dealerHandValue) {
-            sys_.alert("You tied!");
-            sys_.out(BlackjackHelper.results("TIE", hand));
+            sys_.out("You tied!", BlackjackHelper.alert());
+            sys_.out(BlackjackHelper.results("TIE", hand), BlackjackHelper.log());
             money_ += wager;
          }
          else {
-            sys_.alert("Oh dear... you lost, better luck next time :)");
-            sys_.out(BlackjackHelper.results("LOSE", hand));
+            sys_.out("Oh dear... you lost, better luck next time :)", BlackjackHelper.alert());
+            sys_.out(BlackjackHelper.results("LOSE", hand), BlackjackHelper.log());
          }
       });
    }

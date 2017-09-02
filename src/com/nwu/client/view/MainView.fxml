@@ -23,43 +23,43 @@
                 <Menu mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Close" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-        <SplitPane dividerPositions="0.725" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="228.0">
-                    <children>
-                        <AnchorPane focusTraversable="true" layoutY="220.0" prefHeight="300.0" prefWidth="476.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <ImageView fitHeight="220.0" fitWidth="476.0" pickOnBounds="true" visible="false">
-                                    <image>
-                                        <Image url="@../../../../../resources/com/nwu/backend/images/casino_mat.jpg" />
-                                    </image>
-                                </ImageView>
-                                <HBox AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <ImageView fx:id="dc1" fitHeight="100" fitWidth="70" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc2" fitHeight="100" fitWidth="70" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc3" fitHeight="100" fitWidth="70" layoutX="60.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc4" fitHeight="100" fitWidth="70" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc5" fitHeight="100" fitWidth="70" layoutX="160.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc6" fitHeight="100" fitWidth="70" layoutX="370.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc7" fitHeight="100" fitWidth="70" layoutX="460.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                        <ImageView fx:id="dc8" fitHeight="100" fitWidth="70" layoutX="550.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                                    </children>
-                                </HBox>
+                <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <items>
+                <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+        </Menu>
+    </menus>
+</MenuBar>
+<SplitPane dividerPositions="0.725" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+<items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="228.0">
+        <children>
+            <AnchorPane focusTraversable="true" layoutY="220.0" prefHeight="300.0" prefWidth="476.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <ImageView fitHeight="220.0" fitWidth="476.0" pickOnBounds="true" visible="false">
+                        <image>
+                            <Image url="@../../../../../resources/com/nwu/backend/images/casino_mat.jpg" />
+                        </image>
+                    </ImageView>
+                    <HBox AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <ImageView fx:id="dc1" fitHeight="100" fitWidth="70" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc2" fitHeight="100" fitWidth="70" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc3" fitHeight="100" fitWidth="70" layoutX="60.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc4" fitHeight="100" fitWidth="70" layoutX="110.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc5" fitHeight="100" fitWidth="70" layoutX="160.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc6" fitHeight="100" fitWidth="70" layoutX="370.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc7" fitHeight="100" fitWidth="70" layoutX="460.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="dc8" fitHeight="100" fitWidth="70" layoutX="550.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                        </children>
+                    </HBox>
                                   <Label fx:id="systemAlert" alignment="CENTER" layoutY="100.0" prefHeight="20.0" prefWidth="446.0" wrapText="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                                       <font>
                                           <Font name="Comic Sans MS" size="24.0" />

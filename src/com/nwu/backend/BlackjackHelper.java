@@ -1,12 +1,26 @@
 package com.nwu.backend;
 
-public class BlackjackHelper {
+import com.nwu.client.view.Activity;
+
+import java.util.function.Function;
+
+public abstract class BlackjackHelper {
    private static final String kHAND_FORMAT = "%s: %s (%d)";
    private static final String kRESULTS_FORMAT = "You %s with %s (%d)";
    private static final String kGAMEOVER_FORMAT = "GAMEOVER: The casino got you good :) You don't have enough money to play!";
 
    private static final String kERR_NOMONEY_FORMAT = "Nice try! You only have $%.2f";
    private static final String kERR_LESS_THAN_MINWAGER_FORMAT = "You're too cheap! Need to BET at least $%.2f";
+
+   //---------------------------------------------------------------------------
+   public static Function<String, String> log() {
+      return Activity::log;
+   }
+
+   //---------------------------------------------------------------------------
+   public static Function<String, String> alert() {
+      return Activity::alert;
+   }
 
    //---------------------------------------------------------------------------
    public static String hand (String person, Hand hand) {

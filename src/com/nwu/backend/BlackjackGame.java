@@ -1,5 +1,7 @@
 package com.nwu.backend;
 
+import com.nwu.client.view.Activity;
+
 import java.util.*;
 
 import static com.nwu.backend.BlackjackPlayer.Action;
@@ -16,6 +18,7 @@ public class BlackjackGame {
    private Deck deck_;
    private Hand dealerHand_;
    private BlackjackPlayer player_;
+   private Hand currentHand_;
 
    private volatile boolean selectedAction_;
    private volatile boolean selectedBet_;
@@ -26,16 +29,21 @@ public class BlackjackGame {
    private Action action_;
    private double bet_;
 
-   private Hand currentHand_;
-
    //---------------------------------------------------------------------------
    public BlackjackGame (BlackjackPlayer player, double minWager) {
+      // TODO: error handle for negative minWager
+      assert (player != null);
+      assert (minWager >= 0);
+
       sys_ = new SimpleBlackjackSystem();
-      helper_ = new BlackjackHelper();
+
+      class Helper extends BlackjackHelper {}
+      helper_ = new Helper();
 
       minWager_ = minWager;
       player_ = player;
       dealerHand_ = new Hand();
+      currentHand_ = new Hand();
 
       gameOverFlag_ = false;
       selectedAction_ = selectedBet_ = false;
@@ -44,8 +52,6 @@ public class BlackjackGame {
 
       action_ = Action.NONE;
       bet_ = 10;
-
-      currentHand_ = new Hand();
    }
 
    /**
@@ -55,8 +61,7 @@ public class BlackjackGame {
       // check if game's over
       gameOverFlag_ = false;
       if (player_.getMoney() < minWager_) {
-         sys_.alert(helper_.gameOver(player_));
-         sys_.out(helper_.gameOver(player_));
+         sys_.out(helper_.gameOver(player_), helper_.log(), helper_.alert());
          betAvailable_ = false;
          actionsAvailable_.clear();
          gameOverFlag_ = true;
@@ -68,7 +73,7 @@ public class BlackjackGame {
       while (!getAppropiateBetAmount()) ;
 
       // TODO: use this to clear for now, find a better way to clear the alert message on GUI
-      sys_.alert("");
+      Activity.alert("");
 
       dealerHand_.clear();
       player_.clearHands();
@@ -92,7 +97,7 @@ public class BlackjackGame {
       }
 
       // Clean up
-      sys_.out("---------------End of Round---------------");
+      sys_.out("---------------End of Round---------------", helper_.log());
       actionsAvailable_.clear();
    }
 
@@ -153,11 +158,11 @@ public class BlackjackGame {
       selectedBet_ = betAvailable_ = false;
 
       if (bet_ < minWager_) {
-         sys_.out(helper_.errBetLessThanMinWager(player_, minWager_));
+         sys_.out(helper_.errBetLessThanMinWager(player_, minWager_), helper_.log());
          return false;
       }
       else if (bet_ > player_.getMoney()) {
-         sys_.out(helper_.errNoMoney(player_));
+         sys_.out(helper_.errNoMoney(player_), helper_.log());
          return false;
       }
 
@@ -172,7 +177,7 @@ public class BlackjackGame {
    private Hand dealerAI () {
       while (dealerHand_.getValue() < 17) {
          dealerHand_.add(deck_.drawTop());
-         sys_.out(helper_.hand("Dealer", dealerHand_));
+         sys_.out(helper_.hand("Dealer", dealerHand_), helper_.log());
          try {
             Thread.sleep(kDEALER_THINK_TIME_MS);
          }
@@ -190,8 +195,8 @@ public class BlackjackGame {
     * @param hand
     */
    private void actionPhase (Hand hand) {
-      sys_.out(helper_.hand("Dealer", dealerHand_));
-      sys_.out(helper_.hand("You", hand));
+      sys_.out(helper_.hand("Dealer", dealerHand_), helper_.log());
+      sys_.out(helper_.hand("You", hand), helper_.log());
 
       currentHand_ = hand;
 
@@ -211,7 +216,7 @@ public class BlackjackGame {
          case HIT:
             actionsAvailable_.remove(Action.DOUBLEDOWN);
             actionsAvailable_.remove(Action.SPLIT);
-            sys_.out("HIT");
+            sys_.out("HIT", helper_.log());
             if (hand.add(deck_.drawTop()).getValue() > 21) {
                player_.bust(hand);
                return;
@@ -220,13 +225,13 @@ public class BlackjackGame {
 
          case STAY:
             actionsAvailable_.clear();
-            sys_.out("STAY");
+            sys_.out("STAY", helper_.log());
             return;
 
          case DOUBLEDOWN:
             // if we got here, the player should have enough money to double down
             actionsAvailable_.clear();
-            sys_.out("DOUBLEDOWN");
+            sys_.out("DOUBLEDOWN", helper_.log());
             player_.doubleDown(hand);
             if (hand.add(deck_.drawTop()).getValue() > 21) {
                player_.bust(hand);
@@ -236,7 +241,7 @@ public class BlackjackGame {
          case SPLIT:
             // if we got here, the player should have enough money to split
             actionsAvailable_.remove(Action.SPLIT);
-            sys_.out("SPLIT");
+            sys_.out("SPLIT", helper_.log());
             Hand splitHand = player_.split(hand);
             actionPhase(splitHand);
             actionsAvailable_.add(Action.HIT);

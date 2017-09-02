@@ -1,7 +1,8 @@
 package com.nwu.backend;
 
-public interface BlackjackSystem {
-   public void out (String msg);
+import java.util.function.Function;
 
-   public void alert (String msg);
+@FunctionalInterface
+public interface BlackjackSystem {
+   public void out (String msg, Function<String, String>... f);
 }

@@ -23,12 +23,19 @@ public class Activity implements Initializable {
       alertAera_ = alertAera;
    }
 
-   public static void appendText (String str) {
+   public static String appendText (String str) {
       Platform.runLater(() -> textArea_.appendText(str));
+      return str;
    }
 
-   public static void alert (String str) {
+   public static String log (String str) {
+      Platform.runLater(() -> textArea_.appendText(str + '\n'));
+      return str;
+   }
+
+   public static String alert (String str) {
       Platform.runLater(() -> alertAera_.setText(str));
+      return str;
    }
 
    @Override
